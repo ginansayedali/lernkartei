@@ -80,41 +80,125 @@
       // echo print_r($compartment2, 1);
       // echo '</pre>';
       //
-      echo '<div style="float: left; margin: 5%;">';
-      echo '<h3> Box Number: ' . $compartment1->getBoxID() . '</h3>';
+      echo '<div class="container">';
+      echo '<div class="row">';
+      echo '<div class="col-sm-6">';
+      echo '<h5 class="card-title"> Box: ' . $compartment1->getBoxID() . '</h5>';
       foreach ($compartment1->getCards() as $value) {
-        echo  "<p>ID: " . $value['id'] . "</p>";
-        echo  "<p>Created date: " . $value['create_date'] . "</p>";
-        echo  "<p>Word: " . $value['word'] . "</p>";
-        echo  "<p>Meaning: " . $value['word_meaning'] . "</p> <br>";
-      }
-
-      echo '<h3> First Card </h3>';
-      foreach ($compartment1->getFirstCard() as $value) {
-        echo  "<p>ID: " . $value['id'] . "</p>";
-        echo  "<p>Created date: " . $value['create_date'] . "</p>";
-        echo  "<p>Word: " . $value['word'] . "</p>";
-        echo  "<p>Meaning: " . $value['word_meaning'] . "</p> <br>";
+        echo '<div class="card">';
+        echo '<div class="card-body">';
+        echo '<p class="card-title"> Card ID: <span class="badge badge-secondary">'. $value['id'] . '</span></p>';
+        echo '<p class="card-text">' . $value['word'] . "</p>";
+        echo '<p class="card-text">' . $value['word_meaning'] . "</p> <br>";
+        echo '<button type="button" class="btn btn-outline-secondary">not sure</button>';
+        echo '<button type="button" class="btn btn-outline-success">got it</button>';
+        echo '<button type="button" class="btn btn-outline-danger">remove</button>';
+        echo '</div>';
+        echo '</div>';
+        echo '<div class="card-footer">';
+        echo '<small class="text-muted">Created: '. $value['create_date'] .'</small>';
+        echo '</div>';
+        echo '<br>';
       }
       echo '</div>';
 
-      echo '<div style="float: left; margin: 5%;">';
-      echo '<h3> Box Number: ' . $compartment2->getBoxID() . '</h3>';
+      echo '<div class="col-sm-6">';
+      echo '<h5 class="card-title"> Box: ' . $compartment2->getBoxID() . '</h5>';
       foreach ($compartment2->getCards() as $value) {
-        echo  "<p>ID: " . $value['id'] . "</p>";
-        echo  "<p>Created date: " . $value['create_date'] . "</p>";
-        echo  "<p>Word: " . $value['word'] . "</p>";
-        echo  "<p>Meaning: " . $value['word_meaning'] . "</p> <br>";
-      }
-
-      echo '<h3> First Card </h3>';
-      foreach ($compartment2->getFirstCard() as $value) {
-        echo  "<p>ID: " . $value['id'] . "</p>";
-        echo  "<p>Created date: " . $value['create_date'] . "</p>";
-        echo  "<p>Word: " . $value['word'] . "</p>";
-        echo  "<p>Meaning: " . $value['word_meaning'] . "</p> <br>";
+        echo '<div class="card">';
+        echo '<div class="card-body">';
+        echo '<p class="card-title"> Card ID: <span class="badge badge-secondary">'. $value['id'] . '</span></p>';
+        echo '<p class="card-text">' . $value['word'] . "</p>";
+        echo '<p class="card-text">' . $value['word_meaning'] . "</p> <br>";
+        echo '<button type="button" class="btn btn-outline-secondary">not sure</button>';
+        echo '<button type="button" class="btn btn-outline-success">got it</button>';
+        echo '<button type="button" class="btn btn-outline-danger">remove</button>';
+        echo '</div>';
+        echo '</div>';
+        echo '<div class="card-footer">';
+        echo '<small class="text-muted">Created: '. $value['create_date'] .'</small>';
+        echo '</div>';
+        echo '<br>';
       }
       echo '</div>';
+
+      echo '</div>';
+
+      echo '<div class="row">';
+      echo '<div class="col-sm-6">';
+      echo '<h5 class="card-title"> First card: </h5>';
+      foreach ($compartment1->getFirstCard() as $value) {
+        echo '<div class="card">';
+        echo '<div class="card-body">';
+        echo '<p class="card-title"> Card ID: <span class="badge badge-secondary">'. $value['id'] . '</span></p>';
+        echo '<p class="card-text">' . $value['word'] . "</p>";
+        echo '<p class="card-text">' . $value['word_meaning'] . "</p> <br>";
+        echo '<button type="button" class="btn btn-outline-secondary">not sure</button>';
+        echo '<button type="button" class="btn btn-outline-success">got it</button>';
+        echo '<button type="button" class="btn btn-outline-danger">remove</button>';
+        echo '</div>';
+        echo '</div>';
+        echo '<div class="card-footer">';
+        echo '<small class="text-muted">Created: '. $value['create_date'] .'</small>';
+        echo '</div>';
+        echo '<br>';
+      }
+      echo '</div>';
+
+      echo '<div class="col-sm-6">';
+      echo '<h5 class="card-title"> First card: </h5>';
+      foreach ($compartment2->getFirstCard() as $value) {
+        echo '<div class="card">';
+        echo '<div class="card-body">';
+        echo '<p class="card-title"> Card ID: <span class="badge badge-secondary">'. $value['id'] . '</span></p>';
+        echo '<p class="card-text">' . $value['word'] . "</p>";
+        echo '<p class="card-text">' . $value['word_meaning'] . "</p> <br>";
+        echo '<button type="button" class="btn btn-outline-secondary">not sure</button>';
+        echo '<button type="button" class="btn btn-outline-success">got it</button>';
+        echo '<button type="button" class="btn btn-outline-danger">remove</button>';
+        echo '</div>';
+        echo '</div>';
+        echo '<div class="card-footer">';
+        echo '<small class="text-muted">Created: '. $value['create_date'] .'</small>';
+        echo '</div>';
+        echo '<br>';
+      }
+      echo '</div>';
+
+      echo '</div>';
+
+
+      echo '</div>';
+
+
+      // echo '<h3> First Card </h3>';
+      // foreach ($compartment1->getFirstCard() as $value) {
+      //   echo  "<p>ID: " . $value['id'] . "</p>";
+      //   echo  "<p>Created date: " . $value['create_date'] . "</p>";
+      //   echo  "<p>Word: " . $value['word'] . "</p>";
+      //   echo  "<p>Meaning: " . $value['word_meaning'] . "</p> <br>";
+      // }
+      // echo '</div>';
+      //
+      // echo '<div style="float: left; margin: 5%;">';
+      // echo '<h3> Box Number: ' . $compartment2->getBoxID() . '</h3>';
+      // foreach ($compartment2->getCards() as $value) {
+      //   echo  "<p>ID: " . $value['id'] . "</p>";
+      //   echo  "<p>Created date: " . $value['create_date'] . "</p>";
+      //   echo  "<p>Word: " . $value['word'] . "</p>";
+      //   echo  "<p>Meaning: " . $value['word_meaning'] . "</p> <br>";
+      // }
+      //
+      // echo '<h3> First Card </h3>';
+      // foreach ($compartment2->getFirstCard() as $value) {
+      //   echo  "<p>ID: " . $value['id'] . "</p>";
+      //   echo  "<p>Created date: " . $value['create_date'] . "</p>";
+      //   echo  "<p>Word: " . $value['word'] . "</p>";
+      //   echo  "<p>Meaning: " . $value['word_meaning'] . "</p> <br>";
+      // }
+      // echo '</div>';
+
+
 
       // echo '<pre>';
       // echo print_r($compartment1->getCards(),1);
@@ -125,6 +209,7 @@
       // echo '</pre>';
 
     ?>
+
     <script src="<?php echo $js ?>jquery-3.3.1.min.js"></script>
     <script src="<?php echo $js ?>jquery-ui.min.js"></script>
     <script src="<?php echo $js ?>bootstrap.min.js"></script>

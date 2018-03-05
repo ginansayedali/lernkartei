@@ -350,13 +350,9 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 	font-size: 1.5em;
 	border-right: 0.3em solid #8c9daf;
 }
-
-
-
-.row {
-	 /* margin-right: 0; */
-}
-
+.btn{
+	margin: 7px;
+}  
 
 @media (max-width: 575px){
 .setup-left-widget{
