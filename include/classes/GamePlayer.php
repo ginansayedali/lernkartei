@@ -29,22 +29,34 @@
 
     }
 
+    public function createBox(){
+
+      // for ($i  = 1; $i <= $this->numberOfBoxes; $i++){
+      //   $box = "box{$i}";
+      //   $$box = new Box($i,$this->dbConnect);
+      // }
+    }
+
     public function getNumberOfBoxes(){
       return $this->numberOfBoxes;
 
     }
 
-    public function addBox($box){
+    public function addBox(){
+      $this->numberOfBoxes = $this->numberOfBoxes + 1;
+      $stmt = $this->dbConnect->prepare(" INSERT INTO box(box_id) VALUES (" . $this->numberOfBoxes . ") ");
+      $stmt->execute();
 
     }
 
     public function removeBox($box){
 
+
     }
 
     public function deleteAllBoxes(){
       $this->numberOfBoxes = 0;
-      $stmt = $this->dbConnect->prepare(" DELETE FROM box");
+      $stmt = $this->dbConnect->prepare(" DELETE FROM box ");
       $stmt->execute();
     }
 

@@ -20,9 +20,10 @@ class Box{
     foreach ($this->elements as $element) {
       if (!$element->getID()){
         try {
-          $stmt = $this->dbConnect->prepare(" INSERT INTO cards(word, word_meaning)
-                                        VALUES (:zword, :zmeaning) ");
+          $stmt = $this->dbConnect->prepare(" INSERT INTO cards(create_date, word, word_meaning)
+                                        VALUES (:zcdate, :zword, :zmeaning) ");
           $stmt->execute(array(
+            'zcdate' => $element->getCreateDate(),
             'zword' => $element->getWord(),
             'zmeaning' =>  $element->getWordMeaning()
           ));
@@ -93,7 +94,7 @@ class Box{
 
   public function getCards(){
 
-    $stmt = $this->dbConnect->query(" SELECT id, word, word_meaning FROM cards
+    $stmt = $this->dbConnect->query(" SELECT id, create_date, word, word_meaning FROM cards
       JOIN box_has_card ON cards.id = box_has_card.card WHERE box_has_card.box=" . $this->boxID .  "");
     $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);
 
