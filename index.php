@@ -16,6 +16,15 @@
 	    ini_set('error_reporting', E_ALL);
 	    error_reporting(E_ALL);
 
+      $player = new GamePlayer($dbConnect);
+      $player->setPlayerName("Ginan");
+      $player->deleteAllBoxes();
+      $player->setNumberOfBoxes(5);
+
+
+
+
+
       $compartment1 = new Box(1,$dbConnect);
       $compartment2 = new Box(2,$dbConnect);
       $compartment3 = new Box(3,$dbConnect);

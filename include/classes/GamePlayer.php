@@ -1,30 +1,51 @@
 <?php
 
-  private $playerName;
-  private $numberOfBoxes;
 
+  class GamePlayer {
 
-  public function setPlayerName($playerName){
-    $this->playerName = $playerName;
-  }
+    private $playerName;
+    private $numberOfBoxes;
+    private $dbConnect;
 
-  public function getPlayerName(){
-    return $this->playerName;
-  }
+    public function __construct($dbConnect){
+      $this->dbConnect = $dbConnect;
+    }
 
-  public function setNumberOfBoxes($numberOfBoxes){
-    $this->numberOfBoxes = $numberOfBoxes;
-    // todo: insert the number of boxes into database
-  }
+    public function setPlayerName($playerName){
+      $this->playerName = $playerName;
+    }
 
-  public function getNumberOfBoxes(){
-    return $this->numberOfBoxes;
-  }
+    public function getPlayerName(){
+      return $this->playerName;
+    }
 
-  public function addBox($box){
+    public function setNumberOfBoxes($numberOfBoxes){
+      $this->numberOfBoxes = $numberOfBoxes;
+      //todo: insert the number of boxes into database
+      for ($i = 1; $i <= $this->numberOfBoxes; $i++){
+        $stmt = $this->dbConnect->prepare(" INSERT INTO box(box_id) VALUES (" .$i. ") ");
+        $stmt->execute();
+      }
 
-  }
+    }
 
-  public function removeBox($box){
+    public function getNumberOfBoxes(){
+      return $this->numberOfBoxes;
+
+    }
+
+    public function addBox($box){
+
+    }
+
+    public function removeBox($box){
+
+    }
+
+    public function deleteAllBoxes(){
+      $this->numberOfBoxes = 0;
+      $stmt = $this->dbConnect->prepare(" DELETE FROM box");
+      $stmt->execute();
+    }
 
   }

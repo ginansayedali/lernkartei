@@ -71,15 +71,15 @@ class Box{
     }
 
      try {
-    $sql = $this->dbConnect->prepare(" DELETE FROM box_has_card WHERE box=".$this->boxID." AND card=". $id ."");
-    $sql->execute();
+    $stmt = $this->dbConnect->prepare(" DELETE FROM box_has_card WHERE box=".$this->boxID." AND card=". $id ."");
+    $stmt->execute();
     }
     catch (PDOException $e){
       echo $e->getMessage();
     }
   }
 
-  public function getFirstCard($boxID){
+  public function getFirstCard(){
 
   }
 
@@ -93,9 +93,9 @@ class Box{
 
   public function getCards(){
 
-    $sql = $this->dbConnect->query(" SELECT id, word, word_meaning FROM cards
+    $stmt = $this->dbConnect->query(" SELECT id, word, word_meaning FROM cards
       JOIN box_has_card ON cards.id = box_has_card.card WHERE box_has_card.box=" . $this->boxID .  "");
-    $fetchResult = $sql->fetchall(PDO::FETCH_ASSOC);
+    $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);
 
     return $fetchResult;
   }
