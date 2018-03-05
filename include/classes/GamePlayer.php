@@ -33,8 +33,9 @@
 
       // for ($i  = 1; $i <= $this->numberOfBoxes; $i++){
       //   $box = "box{$i}";
-      //   $$box = new Box($i,$this->dbConnect);
+      //
       // }
+      // return $$box = new Box($i,$this->dbConnect);
     }
 
     public function getNumberOfBoxes(){
@@ -51,6 +52,8 @@
 
     public function removeBox($box){
 
+      $stmt = $this->dbConnect->prepare(" DELETE FROM box WHERE box_id=" . $box);
+      $stmt->execute();
 
     }
 

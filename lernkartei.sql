@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 02. Mrz 2018 um 16:29
+-- Erstellungszeit: 05. Mrz 2018 um 14:57
 -- Server-Version: 5.7.21-0ubuntu0.16.04.1
 -- PHP-Version: 5.6.33-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -37,7 +37,11 @@ CREATE TABLE `box` (
 --
 
 INSERT INTO `box` (`box_id`) VALUES
-(1);
+(1),
+(2),
+(3),
+(4),
+(5);
 
 -- --------------------------------------------------------
 
@@ -48,19 +52,17 @@ INSERT INTO `box` (`box_id`) VALUES
 CREATE TABLE `box_has_card` (
   `box` int(4) NOT NULL,
   `card` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `box_has_card`
 --
 
 INSERT INTO `box_has_card` (`box`, `card`) VALUES
-(1, 93),
-(2, 94),
-(1, 95),
-(2, 96),
-(1, 97),
-(2, 98);
+(1, 331),
+(2, 332),
+(1, 333),
+(2, 334);
 
 -- --------------------------------------------------------
 
@@ -70,21 +72,20 @@ INSERT INTO `box_has_card` (`box`, `card`) VALUES
 
 CREATE TABLE `cards` (
   `id` int(11) NOT NULL,
-  `word` varchar(50) NOT NULL,
-  `word_meaning` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `create_date` datetime NOT NULL,
+  `word` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `word_meaning` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `cards`
 --
 
-INSERT INTO `cards` (`id`, `word`, `word_meaning`) VALUES
-(93, 'OOP', 'Objektorientierte Programmierung'),
-(94, 'OOP', 'Objektorientierte Programmierung'),
-(95, 'OOP', 'Objektorientierte Programmierung'),
-(96, 'OOP', 'Objektorientierte Programmierung'),
-(97, 'OOP', 'Objektorientierte Programmierung'),
-(98, 'OOP', 'Objektorientierte Programmierung');
+INSERT INTO `cards` (`id`, `create_date`, `word`, `word_meaning`) VALUES
+(331, '2018-03-05 14:56:16', 'OOP', 'Objektorientierte Programmierung'),
+(332, '2018-03-05 14:56:16', 'OOP', 'Objektorientierte Programmierung'),
+(333, '2018-03-05 14:56:18', 'OOP', 'Objektorientierte Programmierung'),
+(334, '2018-03-05 14:56:18', 'OOP', 'Objektorientierte Programmierung');
 
 -- --------------------------------------------------------
 
@@ -94,10 +95,10 @@ INSERT INTO `cards` (`id`, `word`, `word_meaning`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `username` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `password` varchar(50) CHARACTER SET latin1 NOT NULL,
+  `email` varchar(50) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Daten für Tabelle `users`
@@ -143,7 +144,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `cards`
 --
 ALTER TABLE `cards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=335;
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
@@ -159,6 +160,7 @@ ALTER TABLE `users`
 -- Constraints der Tabelle `box_has_card`
 --
 ALTER TABLE `box_has_card`
+  ADD CONSTRAINT `box_box` FOREIGN KEY (`box`) REFERENCES `box` (`box_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `box_cards` FOREIGN KEY (`card`) REFERENCES `cards` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 

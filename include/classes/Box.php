@@ -72,7 +72,7 @@ class Box{
     }
 
      try {
-    $stmt = $this->dbConnect->prepare(" DELETE FROM box_has_card WHERE box=".$this->boxID." AND card=". $id ."");
+    $stmt = $this->dbConnect->prepare(" DELETE FROM box_has_card WHERE box=".$this->boxID." AND card=". $id );
     $stmt->execute();
     }
     catch (PDOException $e){
@@ -81,6 +81,10 @@ class Box{
   }
 
   public function getFirstCard(){
+    $stmt = $this->dbConnect->query(" SELECT id, create_date, word, word_meaning FROM cards
+      JOIN box_has_card ON cards.id = box_has_card.card WHERE box_has_card.box=" . $this->boxID . " ORDER BY cards.id LIMIT 1" );
+    $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);
+    return $fetchResult;
 
   }
 
@@ -95,7 +99,7 @@ class Box{
   public function getCards(){
 
     $stmt = $this->dbConnect->query(" SELECT id, create_date, word, word_meaning FROM cards
-      JOIN box_has_card ON cards.id = box_has_card.card WHERE box_has_card.box=" . $this->boxID .  "");
+      JOIN box_has_card ON cards.id = box_has_card.card WHERE box_has_card.box=" . $this->boxID );
     $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);
 
     return $fetchResult;
