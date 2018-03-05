@@ -1,6 +1,5 @@
 <?php
 
-
   class GamePlayer {
 
     private $playerName;
@@ -26,16 +25,14 @@
         $stmt = $this->dbConnect->prepare(" INSERT INTO box(box_id) VALUES (" .$i. ") ");
         $stmt->execute();
       }
-
     }
 
     public function createBox(){
-
       // for ($i  = 1; $i <= $this->numberOfBoxes; $i++){
       //   $box = "box{$i}";
-      //
+      //   $$box = new Box($i,$this->dbConnect);
+      //   return $$box;
       // }
-      // return $$box = new Box($i,$this->dbConnect);
     }
 
     public function getNumberOfBoxes(){
@@ -51,7 +48,8 @@
     }
 
     public function removeBox($box){
-
+      if ($this->numberOfBoxes != 0);
+      $this->numberOfBoxes = $this->numberOfBoxes -1;
       $stmt = $this->dbConnect->prepare(" DELETE FROM box WHERE box_id=" . $box);
       $stmt->execute();
 
@@ -62,5 +60,13 @@
       $stmt = $this->dbConnect->prepare(" DELETE FROM box ");
       $stmt->execute();
     }
+
+    // public function moveCardToNextBox($card,$boxID){
+    //
+    // }
+    //
+    // public function moveCardToFirstBox($card){
+    //
+    // }
 
   }

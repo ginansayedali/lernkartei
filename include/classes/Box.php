@@ -88,6 +88,10 @@ class Box{
 
   }
 
+  public function getBoxID(){
+    return $this->boxID;
+  }
+
   public function get($id){
     foreach($this->elements as $key => $card ){
       if ($card->getID() == $id){
@@ -97,11 +101,9 @@ class Box{
   }
 
   public function getCards(){
-
     $stmt = $this->dbConnect->query(" SELECT id, create_date, word, word_meaning FROM cards
       JOIN box_has_card ON cards.id = box_has_card.card WHERE box_has_card.box=" . $this->boxID );
     $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);
-
     return $fetchResult;
   }
 }
