@@ -79,7 +79,7 @@ class Box{
     }
   }
 
-  public function getNextCardToReadIt($boxID){
+  public function getFirstCard($boxID){
 
   }
 
