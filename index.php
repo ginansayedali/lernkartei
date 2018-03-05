@@ -80,6 +80,8 @@
       // echo print_r($compartment2, 1);
       // echo '</pre>';
       //
+      echo '<h3>Player {Name}</h3>';
+      // echo '<p>Player can add or remove Box or move card from box to other box</p><br />';
       echo '<div class="container">';
       echo '<div class="row">';
       echo '<div class="col-sm-6">';
@@ -88,15 +90,15 @@
         echo '<div class="card">';
         echo '<div class="card-body">';
         echo '<p class="card-title"> Card ID: <span class="badge badge-secondary">'. $value['id'] . '</span></p>';
-        echo '<p class="card-text">' . $value['word'] . "</p>";
+        echo '<h1 class="card-text">' . $value['word'] . "</h1>";
         echo '<p class="card-text">' . $value['word_meaning'] . "</p> <br>";
         echo '<button type="button" class="btn btn-outline-secondary">not sure</button>';
         echo '<button type="button" class="btn btn-outline-success">got it</button>';
         echo '<button type="button" class="btn btn-outline-danger">remove</button>';
         echo '</div>';
-        echo '</div>';
         echo '<div class="card-footer">';
         echo '<small class="text-muted">Created: '. $value['create_date'] .'</small>';
+        echo '</div>';
         echo '</div>';
         echo '<br>';
       }
@@ -108,15 +110,15 @@
         echo '<div class="card">';
         echo '<div class="card-body">';
         echo '<p class="card-title"> Card ID: <span class="badge badge-secondary">'. $value['id'] . '</span></p>';
-        echo '<p class="card-text">' . $value['word'] . "</p>";
+        echo '<h1 class="card-text">' . $value['word'] . "</h1>";
         echo '<p class="card-text">' . $value['word_meaning'] . "</p> <br>";
         echo '<button type="button" class="btn btn-outline-secondary">not sure</button>';
         echo '<button type="button" class="btn btn-outline-success">got it</button>';
         echo '<button type="button" class="btn btn-outline-danger">remove</button>';
         echo '</div>';
-        echo '</div>';
         echo '<div class="card-footer">';
         echo '<small class="text-muted">Created: '. $value['create_date'] .'</small>';
+        echo '</div>';
         echo '</div>';
         echo '<br>';
       }
@@ -131,15 +133,16 @@
         echo '<div class="card">';
         echo '<div class="card-body">';
         echo '<p class="card-title"> Card ID: <span class="badge badge-secondary">'. $value['id'] . '</span></p>';
-        echo '<p class="card-text">' . $value['word'] . "</p>";
+        echo '<h1 class="card-text">' . $value['word'] . "</h1>";
         echo '<p class="card-text">' . $value['word_meaning'] . "</p> <br>";
         echo '<button type="button" class="btn btn-outline-secondary">not sure</button>';
         echo '<button type="button" class="btn btn-outline-success">got it</button>';
         echo '<button type="button" class="btn btn-outline-danger">remove</button>';
-        echo '</div>';
+
         echo '</div>';
         echo '<div class="card-footer">';
         echo '<small class="text-muted">Created: '. $value['create_date'] .'</small>';
+        echo '</div>';
         echo '</div>';
         echo '<br>';
       }
@@ -151,22 +154,21 @@
         echo '<div class="card">';
         echo '<div class="card-body">';
         echo '<p class="card-title"> Card ID: <span class="badge badge-secondary">'. $value['id'] . '</span></p>';
-        echo '<p class="card-text">' . $value['word'] . "</p>";
+        echo '<h1 class="card-text">' . $value['word'] . "</h1>";
         echo '<p class="card-text">' . $value['word_meaning'] . "</p> <br>";
         echo '<button type="button" class="btn btn-outline-secondary">not sure</button>';
         echo '<button type="button" class="btn btn-outline-success">got it</button>';
         echo '<button type="button" class="btn btn-outline-danger">remove</button>';
-        echo '</div>';
+
         echo '</div>';
         echo '<div class="card-footer">';
         echo '<small class="text-muted">Created: '. $value['create_date'] .'</small>';
         echo '</div>';
+        echo '</div>';
         echo '<br>';
       }
       echo '</div>';
-
       echo '</div>';
-
 
       echo '</div>';
 
