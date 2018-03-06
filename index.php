@@ -13,38 +13,6 @@
       <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
           <div class=" login-page">
-          	<h1 class="text-center"> <span class="selected">Create Game</span></h1>
-            <form class="database-setup" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
-              <div class="input-container">
-                <input
-                  class="form-control"
-                  type="text"
-                  name="player_name"
-                  autocomplete="off"
-                  placeholder="Player Name"
-                  required />
-              </div>
-              <div class="input-container">
-                <input
-                  class="form-control"
-                  type="text"
-                  name="box_count"
-                  autocomplete="off"
-                  placeholder="How many box?"
-                  required />
-              </div>
-              <div class="input-container">
-                <input
-                  class ="btn btn-primary btn-block"
-                  name = "set_game"
-                  type="submit"
-                  value="Add" />
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-6">
-          <div class=" login-page">
             <h1 class="text-center"> <span class="selected">Add card</span></h1>
             <form class="database-setup" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
               <div class="input-container">
@@ -77,6 +45,7 @@
         </div>
       </div>
     </div>
+    <br>
 
       <?php
 
@@ -84,40 +53,50 @@
       ini_set('error_reporting', E_ALL);
       error_reporting(E_ALL);
 
-      $box1 = new Box(1,$dbConnect);
-      $box2 = new Box(2,$dbConnect);
+      $game = new Game($dbConnect);
+      $game->setPlayerName('ginan');
 
       if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (isset($_POST['set_game'])) {
-          $player = new Game($dbConnect);
-           $player->setPlayerName($_POST['player_name']);
-           $player->deleteAllBoxes();
-           $player->setNumberOfBoxes($_POST['box_count']);
-           }
-
         if (isset($_POST['add_card'])) {
+          $box = new Box(1,$dbConnect);
           $card = new Card();
     	    $card->setWord($_POST['card_word']);
     	    $card->setWordMeaning($_POST['card_word']);
-          $box1->add($card);
+          $box->add($card);
         }
 
       }
+
+      $do = isset($_GET['do']);
+      if ($do == 'Delete'){
+        $cardID = isset($_GET['cardID']) && is_numeric($_GET['cardID']) ? intval($_GET['cardID']) : 0;
+
+        $stmt = $dbConnect->prepare("DELETE FROM cards WHERE id= :cid ");
+        $stmt->bindParam(":cid", $cardID);
+        $stmt->execute();
+      }
       ?>
-      <h3>Player: {Name}</h3>
+      <!-- <h3>Player: {Name}</h3> -->
       <div class="container">
         <div class="row">
+
+
+          <?php
+          $boxes = $game->getBoxes();
+          foreach ($boxes as $box):
+            ?>
+
           <div class="col-sm-6">
-            <h5 class="card-title"> Box: <?php echo $box1->getBoxID(); ?> </h5>
-            <?php foreach ($box1->getCards() as $value): ?>
+            <h5 class="card-title"> Box: <?php echo $box->getBoxID() . ' '; ?>  Count:  <?php echo $box->getCardCount(); ?> </h5>
+            <?php foreach ($box->getCards() as $value): ?>
               <div class="card">
               <div class="card-body">
               <p class="card-title"> Card ID: <span class="badge badge-secondary"> <?php echo $value['id']; ?> </span></p>
               <h1 class="card-text"> <?php echo $value['word']; ?> </h1>
               <p class="card-text"> <?php echo $value['word_meaning']; ?> </p> <br>
-              <button type="button" class="btn btn-outline-secondary">not sure</button>
-              <button type="button" class="btn btn-outline-success">got it</button>
-              <button type="button" class="btn btn-outline-danger">remove</button>
+              <button type="button" class="btn btn-outline-secondary">Not sure</button>
+              <button type="button" class="btn btn-outline-success">I got it</button>
+              <button type="button" onclick='window.location.href="<?=$_SERVER['PHP_SELF']?>?do=Delete&cardID=<?php echo $value['id'] ?>"' class="btn btn-outline-danger">Delete</button>
               </div>
               <div class="card-footer">
               <small class="text-muted">Created: <?php echo $value['create_date']; ?> </small>
@@ -127,93 +106,12 @@
             <?php endforeach; ?>
           </div>
 
-          <div class="col-sm-6">
-            <h5 class="card-title"> Box: <?php echo $box2->getBoxID(); ?> </h5>
-            <?php foreach ($box2->getCards() as $value): ?>
-              <div class="card">
-              <div class="card-body">
-              <p class="card-title"> Card ID: <span class="badge badge-secondary"> <?php echo $value['id']; ?> </span></p>
-              <h1 class="card-text"> <?php echo $value['word']; ?> </h1>
-              <p class="card-text"> <?php echo $value['word_meaning']; ?> </p> <br>
-              <button type="button" class="btn btn-outline-secondary">not sure</button>
-              <button type="button" class="btn btn-outline-success">got it</button>
-              <button type="button" class="btn btn-outline-danger">remove</button>
-              </div>
-              <div class="card-footer">
-              <small class="text-muted">Created: <?php echo $value['create_date']; ?> </small>
-              </div>
-              </div>
-              <br>
-            <?php endforeach; ?>
-          </div>
-          </div>
-          <div class="row">
-          <div class="col-sm-6">
-            <h5 class="card-title"> First card: </h5>
-            <?php foreach ($box1->getFirstCard() as $value): ?>
-              <div class="card">
-              <div class="card-body">
-              <p class="card-title"> Card ID: <span class="badge badge-secondary"> <?php echo $value['id']; ?> </span></p>
-              <h1 class="card-text"> <?php echo $value['word']; ?> </h1>
-              <p class="card-text"> <?php echo $value['word_meaning']; ?> </p> <br>
-              <button type="button" class="btn btn-outline-secondary">not sure</button>
-              <button type="button" class="btn btn-outline-success">got it</button>
-              <button type="button" class="btn btn-outline-danger">remove</button>
-              </div>
-              <div class="card-footer">
-              <small class="text-muted">Created: <?php echo $value['create_date']; ?> </small>
-              </div>
-              </div>
-              <br>
-            <?php endforeach; ?>
-          </div>
-
-        <div class="col-sm-6">
-          <h5 class="card-title"> First card: </h5>
-          <?php foreach ($box2->getFirstCard() as $value): ?>
-            <div class="card">
-            <div class="card-body">
-            <p class="card-title"> Card ID: <span class="badge badge-secondary"> <?php echo $value['id']; ?> </span></p>
-            <h1 class="card-text"> <?php echo $value['word']; ?> </h1>
-            <p class="card-text"> <?php echo $value['word_meaning']; ?> </p> <br>
-            <button type="button" class="btn btn-outline-secondary">not sure</button>
-            <button type="button" class="btn btn-outline-success">got it</button>
-            <button type="button" class="btn btn-outline-danger">remove</button>
-            </div>
-            <div class="card-footer">
-            <small class="text-muted">Created: <?php echo $value['create_date']; ?> </small>
-            </div>
-            </div>
-            <br>
           <?php endforeach; ?>
+
         </div>
-        </div>
-    </div>
-      <!--
+      </div>
 
 
-      echo '<div class="row">';
-      echo '<div class="col-sm-6">';
-      echo '<h5 class="card-title"> First card: </h5>';
-      foreach ($box1->getFirstCard() as $value) {
-        echo '<div class="card">';
-        echo '<div class="card-body">';
-        echo '<p class="card-title"> Card ID: <span class="badge badge-secondary">'. $value['id'] . '</span></p>';
-        echo '<h1 class="card-text">' . $value['word'] . "</h1>";
-        echo '<p class="card-text">' . $value['word_meaning'] . "</p> <br>";
-        echo '<button type="button" class="btn btn-outline-secondary">not sure</button>';
-        echo '<button type="button" class="btn btn-outline-success">got it</button>';
-        echo '<button type="button" class="btn btn-outline-danger">remove</button>';
-
-        echo '</div>';
-        echo '<div class="card-footer">';
-        echo '<small class="text-muted">Created: '. $value['create_date'] .'</small>';
-        echo '</div>';
-        echo '</div>';
-        echo '<br>';
-      }
-      echo '</div>';
- -->
 
 
     <script src="<?php echo $js ?>jquery-3.3.1.min.js"></script>

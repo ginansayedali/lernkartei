@@ -6,10 +6,14 @@ class Box{
   private $boxID;
   private $dbConnect;
 
-  public function __construct($boxID = 1, $dbConnect){
+  public function __construct($boxID, $dbConnect){
     $this->dbConnect = $dbConnect;
     $this->boxID = $boxID;
   }
+   public function setID($id){
+     $this->boxID = $id;
+     return $this;
+   }
 
   public function add($card){
     if (!$card->getID()){
@@ -74,6 +78,19 @@ class Box{
     } catch (PDOException $e){
       echo $e->getMessage();
     }
+  }
+
+  public function getCardCount(){
+
+    try {
+    $stmt = $this->dbConnect->query(" SELECT COUNT(*) FROM box_has_card WHERE box=" . $this->boxID );
+    $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);
+    $cardCount = $fetchResult[0]['COUNT(*)'];
+    return $cardCount;
+    } catch (PDOException $e){
+      echo $e->getMessage();
+    }
+
   }
 
   public function getBoxID(){
