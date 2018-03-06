@@ -1,6 +1,6 @@
 <?php
 
-  class GamePlayer {
+  class Game{
 
     private $playerName;
     private $numberOfBoxes;
@@ -22,7 +22,7 @@
       $this->numberOfBoxes = $numberOfBoxes;
       //todo: insert the number of boxes into database
       for ($i = 1; $i <= $this->numberOfBoxes; $i++){
-        $stmt = $this->dbConnect->prepare(" INSERT INTO box(box_id) VALUES (" .$i. ") ");
+        $stmt = $this->dbConnect->prepare(" INSERT INTO box(box_id) VALUES (" . $i . ") ");
         $stmt->execute();
       }
     }
@@ -31,7 +31,6 @@
       // for ($i  = 1; $i <= $this->numberOfBoxes; $i++){
       //   $box = "box{$i}";
       //   $$box = new Box($i,$this->dbConnect);
-      //   return $$box;
       // }
     }
 
@@ -44,13 +43,12 @@
       $this->numberOfBoxes = $this->numberOfBoxes + 1;
       $stmt = $this->dbConnect->prepare(" INSERT INTO box(box_id) VALUES (" . $this->numberOfBoxes . ") ");
       $stmt->execute();
-
     }
 
-    public function removeBox($box){
+    public function removeBox($boxID){
       if ($this->numberOfBoxes != 0);
       $this->numberOfBoxes = $this->numberOfBoxes -1;
-      $stmt = $this->dbConnect->prepare(" DELETE FROM box WHERE box_id=" . $box);
+      $stmt = $this->dbConnect->prepare(" DELETE FROM box WHERE box_id=" . $boxID);
       $stmt->execute();
 
     }
