@@ -10,14 +10,13 @@ class Box{
     $this->dbConnect = $dbConnect;
     $this->boxID = $boxID;
   }
+
    public function setID($id){
      $this->boxID = $id;
      //return $this;
    }
 
   public function add($card){
-
-
     if (!$card->getID()){
       try {
         $stmt = $this->dbConnect->prepare(" INSERT INTO cards(create_date, word, word_meaning)
@@ -30,9 +29,7 @@ class Box{
       } catch (PDOException $e){
         echo $e->getMessage();
       }
-
       $card->setID($this->dbConnect->lastInsertId());
-
       try {
         $stmt = $this->dbConnect->prepare(" INSERT INTO box_has_card(box, card) VALUES (:zbox, :zcard) ");
         $stmt->execute(array(
@@ -42,13 +39,9 @@ class Box{
       } catch (PDOException $e){
         echo $e->getMessage();
       }
-
       $this->elements[] = $card;
-
     }else {
-
       $card->setID($card->getID());
-
       try {
         $stmt = $this->dbConnect->prepare(" INSERT INTO box_has_card(box, card) VALUES (:zbox, :zcard) ");
         $stmt->execute(array(
@@ -58,25 +51,14 @@ class Box{
       } catch (PDOException $e){
         echo $e->getMessage();
       }
-
       $this->elements[] = $card;
     }
-
   }
-  // todo : remove card from box
-  // public function removeCard($id, $boxID){
-  //   $newID = $boxID + 1;
-  //   try {
-  //   $stmt = $this->dbConnect->prepare(" UPDATE box_has_card SET box=" . $newID . " WHERE box=". $boxID ." AND card=". $id );
-  //   $stmt->execute();
-  //   } catch (PDOException $e){
-  //     echo $e->getMessage();
-  //   }
-  // }
 
   public function deleteCard($id){
+    unset($this->elements[$id]);
     try {
-    $stmt = $this->dbConnect->prepare(" DELETE FROM box_has_card WHERE box=". $this->boxID ." AND card=". $id );
+    $stmt = $this->dbConnect->prepare(" DELETE FROM box_has_card WHERE box=" . $this->boxID . " AND card=". $id );
     $stmt->execute();
     } catch (PDOException $e){
       echo $e->getMessage();
@@ -102,7 +84,6 @@ class Box{
   }
 
   public function getCardCount(){
-
     try {
     $stmt = $this->dbConnect->query(" SELECT COUNT(*) FROM box_has_card WHERE box=" . $this->boxID );
     $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);

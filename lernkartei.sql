@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 05. Mrz 2018 um 14:57
+-- Erstellungszeit: 07. Mrz 2018 um 15:01
 -- Server-Version: 5.7.21-0ubuntu0.16.04.1
 -- PHP-Version: 5.6.33-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -59,10 +59,7 @@ CREATE TABLE `box_has_card` (
 --
 
 INSERT INTO `box_has_card` (`box`, `card`) VALUES
-(1, 331),
-(2, 332),
-(1, 333),
-(2, 334);
+(1, 533);
 
 -- --------------------------------------------------------
 
@@ -82,10 +79,25 @@ CREATE TABLE `cards` (
 --
 
 INSERT INTO `cards` (`id`, `create_date`, `word`, `word_meaning`) VALUES
-(331, '2018-03-05 14:56:16', 'OOP', 'Objektorientierte Programmierung'),
-(332, '2018-03-05 14:56:16', 'OOP', 'Objektorientierte Programmierung'),
-(333, '2018-03-05 14:56:18', 'OOP', 'Objektorientierte Programmierung'),
-(334, '2018-03-05 14:56:18', 'OOP', 'Objektorientierte Programmierung');
+(533, '2018-03-07 14:54:06', 'Card', 'Card');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `game`
+--
+
+CREATE TABLE `game` (
+  `player_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `number_of_boxes` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Daten für Tabelle `game`
+--
+
+INSERT INTO `game` (`player_name`, `number_of_boxes`) VALUES
+('Ginan', 5);
 
 -- --------------------------------------------------------
 
@@ -144,24 +156,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `cards`
 --
 ALTER TABLE `cards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=335;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=534;
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- Constraints der exportierten Tabellen
---
-
---
--- Constraints der Tabelle `box_has_card`
---
-ALTER TABLE `box_has_card`
-  ADD CONSTRAINT `box_box` FOREIGN KEY (`box`) REFERENCES `box` (`box_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `box_cards` FOREIGN KEY (`card`) REFERENCES `cards` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

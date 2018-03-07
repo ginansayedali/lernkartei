@@ -54,8 +54,6 @@
       error_reporting(E_ALL);
 
       $game = new Game($dbConnect);
-      // $box = new Box(1,$dbConnect);
-      $game->setPlayerName('ginan');
 
       if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['add_card'])) {
@@ -64,19 +62,12 @@
     	    $card->setWord($_POST['card_word']);
     	    $card->setWordMeaning($_POST['card_meaning']);
           $box->add($card);
-
         }
-
       }
       // $box->removeCard(481,1);
       if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $do = isset($_GET['do']) ? $_GET['do'] : 'move';
-        if ($do == 'delete'){
-          $cardID = isset($_GET['cardID']) && is_numeric($_GET['cardID']) ? intval($_GET['cardID']) : 0;
-          $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
-          $boxG = new Box($boxID,$dbConnect);
-          $boxG->deleteCard($cardID);
-        }elseif ($do == 'move'){
+        if ($do == 'move'){
           $cardID = isset($_GET['cardID']) && is_numeric($_GET['cardID']) ? intval($_GET['cardID']) : 0;
           $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
           $game->moveCardToNextBox($cardID, $boxID);
@@ -86,7 +77,6 @@
           $game->moveCardToFirstBox($cardID, $boxID);
         }
       }
-
       ?>
 
       <div class="container">
@@ -105,7 +95,6 @@
               <p class="card-text"> <?php echo $value['word_meaning']; ?> </p> <br>
               <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=notsure&cardID=<?php echo $value['id'] . "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-secondary">Not sure</button>
               <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=move&cardID=<?php echo $value['id'] . "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-success">I got it</button>
-              <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=delete&cardID=<?php echo $value['id'] . "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-danger">Delete</button>
               </div>
               <div class="card-footer">
               <small class="text-muted">Created: <?php echo $value['create_date']; ?> </small>
