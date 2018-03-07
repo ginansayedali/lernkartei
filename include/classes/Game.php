@@ -16,7 +16,8 @@
 
       // hier db abfrage auf boxen + loop
       for ($i = 1; $i <= $cardCount; $i++ ){
-          $this->boxes[] = new Box($i, $dbConnect);
+          $this->boxes[$i] = new Box($i, $dbConnect);
+          $this->boxes[$i]->setID($i);
           //$this->boxes[] = new Box($dbConnect);
 
       }
@@ -61,7 +62,7 @@
       $stmt->execute();
     }
 
-    public function removeBox($boxID){
+    public function deleteBox($boxID){
       if ($this->numberOfBoxes != 0);
       $this->numberOfBoxes = $this->numberOfBoxes -1;
       $stmt = $this->dbConnect->prepare(" DELETE FROM box WHERE box_id=" . $boxID);
@@ -77,14 +78,36 @@
 
 
 
-    public function moveCardToNextBox($card,$boxID){
-
-      
-
+    public function moveCardToNextBox($cardID,$boxID){
+      // $newID = $boxID + 1;
+      if (isset($this->boxes[$boxID+1])){
+        for ($i = 1; $i <= count($this->boxes); $i++ ){
+            if($this->boxes[$i]->getBoxID() == $boxID){
+               $i++;
+               break;
+            }
+        }
+        $newID = $this->boxes[$i]->getBoxID();
+          try {
+          $stmt = $this->dbConnect->prepare(" UPDATE box_has_card SET box=" . $newID . " WHERE box=". $boxID ." AND card=". $cardID );
+          $stmt->execute();
+          } catch (PDOException $e){
+            echo $e->getMessage();
+          }
+      } else {
+        // delete card
+      }
     }
     //
-    // public function moveCardToFirstBox($card){
-    //
-    // }
+
+    public function moveCardToFirstBox($cardID,$boxID){
+      $newID = 1;
+      try {
+      $stmt = $this->dbConnect->prepare(" UPDATE box_has_card SET box=" . $newID . " WHERE box=". $boxID ." AND card=". $cardID );
+      $stmt->execute();
+      } catch (PDOException $e){
+        echo $e->getMessage();
+      }
+    }
 
   }

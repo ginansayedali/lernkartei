@@ -2,7 +2,7 @@
 
 class Box{
 
-  //private $elements = [];
+  private $elements = [];
   private $boxID;
   private $dbConnect;
 
@@ -12,10 +12,12 @@ class Box{
   }
    public function setID($id){
      $this->boxID = $id;
-     return $this;
+     //return $this;
    }
 
   public function add($card){
+
+
     if (!$card->getID()){
       try {
         $stmt = $this->dbConnect->prepare(" INSERT INTO cards(create_date, word, word_meaning)
@@ -32,8 +34,7 @@ class Box{
       $card->setID($this->dbConnect->lastInsertId());
 
       try {
-        $stmt = $this->dbConnect->prepare(" INSERT INTO box_has_card(box, card)
-                                      VALUES (:zbox, :zcard) ");
+        $stmt = $this->dbConnect->prepare(" INSERT INTO box_has_card(box, card) VALUES (:zbox, :zcard) ");
         $stmt->execute(array(
           'zbox' => $this->boxID,
           'zcard' =>  $card->getID(),
@@ -41,14 +42,15 @@ class Box{
       } catch (PDOException $e){
         echo $e->getMessage();
       }
+
+      $this->elements[] = $card;
 
     }else {
 
       $card->setID($card->getID());
 
       try {
-        $stmt = $this->dbConnect->prepare(" INSERT INTO box_has_card(box, card)
-                                      VALUES (:zbox, :zcard) ");
+        $stmt = $this->dbConnect->prepare(" INSERT INTO box_has_card(box, card) VALUES (:zbox, :zcard) ");
         $stmt->execute(array(
           'zbox' => $this->boxID,
           'zcard' =>  $card->getID(),
@@ -56,13 +58,32 @@ class Box{
       } catch (PDOException $e){
         echo $e->getMessage();
       }
+
+      $this->elements[] = $card;
     }
 
   }
+  // todo : remove card from box
+  // public function removeCard($id, $boxID){
+  //   $newID = $boxID + 1;
+  //   try {
+  //   $stmt = $this->dbConnect->prepare(" UPDATE box_has_card SET box=" . $newID . " WHERE box=". $boxID ." AND card=". $id );
+  //   $stmt->execute();
+  //   } catch (PDOException $e){
+  //     echo $e->getMessage();
+  //   }
+  // }
 
-  public function remove($id){
+  public function deleteCard($id){
     try {
     $stmt = $this->dbConnect->prepare(" DELETE FROM box_has_card WHERE box=". $this->boxID ." AND card=". $id );
+    $stmt->execute();
+    } catch (PDOException $e){
+      echo $e->getMessage();
+    }
+
+    try {
+    $stmt = $this->dbConnect->prepare(" DELETE FROM cards WHERE id=". $id );
     $stmt->execute();
     } catch (PDOException $e){
       echo $e->getMessage();

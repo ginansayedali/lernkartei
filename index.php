@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<?php echo $css ?>main.css" />
   </head>
   <body>
-    <div class="fullwidth-container ">
+    <div class="container">
       <div class="row">
         <div class="col-sm-6 col-md-6 col-lg-6">
           <div class=" login-page">
@@ -54,6 +54,7 @@
       error_reporting(E_ALL);
 
       $game = new Game($dbConnect);
+      // $box = new Box(1,$dbConnect);
       $game->setPlayerName('ginan');
 
       if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -61,32 +62,40 @@
           $box = new Box(1,$dbConnect);
           $card = new Card();
     	    $card->setWord($_POST['card_word']);
-    	    $card->setWordMeaning($_POST['card_word']);
+    	    $card->setWordMeaning($_POST['card_meaning']);
           $box->add($card);
+
         }
 
       }
-
-      $do = isset($_GET['do']);
-      if ($do == 'Delete'){
-        $cardID = isset($_GET['cardID']) && is_numeric($_GET['cardID']) ? intval($_GET['cardID']) : 0;
-
-        $stmt = $dbConnect->prepare("DELETE FROM cards WHERE id= :cid ");
-        $stmt->bindParam(":cid", $cardID);
-        $stmt->execute();
+      // $box->removeCard(481,1);
+      if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        $do = isset($_GET['do']) ? $_GET['do'] : 'move';
+        if ($do == 'delete'){
+          $cardID = isset($_GET['cardID']) && is_numeric($_GET['cardID']) ? intval($_GET['cardID']) : 0;
+          $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
+          $boxG = new Box($boxID,$dbConnect);
+          $boxG->deleteCard($cardID);
+        }elseif ($do == 'move'){
+          $cardID = isset($_GET['cardID']) && is_numeric($_GET['cardID']) ? intval($_GET['cardID']) : 0;
+          $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
+          $game->moveCardToNextBox($cardID, $boxID);
+        } elseif ($do == 'notsure'){
+          $cardID = isset($_GET['cardID']) && is_numeric($_GET['cardID']) ? intval($_GET['cardID']) : 0;
+          $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
+          $game->moveCardToFirstBox($cardID, $boxID);
+        }
       }
+
       ?>
-      <!-- <h3>Player: {Name}</h3> -->
+
       <div class="container">
         <div class="row">
-
-
           <?php
           $boxes = $game->getBoxes();
           foreach ($boxes as $box):
             ?>
-
-          <div class="col-sm-6">
+          <div class="col-sm-4">
             <h5 class="card-title"> Box: <?php echo $box->getBoxID() . ' '; ?>  Count:  <?php echo $box->getCardCount(); ?> </h5>
             <?php foreach ($box->getCards() as $value): ?>
               <div class="card">
@@ -94,9 +103,9 @@
               <p class="card-title"> Card ID: <span class="badge badge-secondary"> <?php echo $value['id']; ?> </span></p>
               <h1 class="card-text"> <?php echo $value['word']; ?> </h1>
               <p class="card-text"> <?php echo $value['word_meaning']; ?> </p> <br>
-              <button type="button" class="btn btn-outline-secondary">Not sure</button>
-              <button type="button" class="btn btn-outline-success">I got it</button>
-              <button type="button" onclick='window.location.href="<?=$_SERVER['PHP_SELF']?>?do=Delete&cardID=<?php echo $value['id'] ?>"' class="btn btn-outline-danger">Delete</button>
+              <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=notsure&cardID=<?php echo $value['id'] . "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-secondary">Not sure</button>
+              <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=move&cardID=<?php echo $value['id'] . "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-success">I got it</button>
+              <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=delete&cardID=<?php echo $value['id'] . "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-danger">Delete</button>
               </div>
               <div class="card-footer">
               <small class="text-muted">Created: <?php echo $value['create_date']; ?> </small>
@@ -105,14 +114,9 @@
               <br>
             <?php endforeach; ?>
           </div>
-
           <?php endforeach; ?>
-
         </div>
       </div>
-
-
-
 
     <script src="<?php echo $js ?>jquery-3.3.1.min.js"></script>
     <script src="<?php echo $js ?>jquery-ui.min.js"></script>
