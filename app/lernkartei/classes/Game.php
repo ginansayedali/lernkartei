@@ -19,11 +19,6 @@
       $this->numberOfBoxes = count($this->boxes);
     }
 
-    public function getBoxes()
-    {
-      return $this->boxes;
-    }
-
     public function setPlayerName($playerName)
     {
       $this->playerName = $playerName;
@@ -37,17 +32,22 @@
       return $this->playerName;
     }
 
-    public function getNumberOfBoxes()
-    {
-      return $this->numberOfBoxes;
-    }
-
     public function addBox()
     {
       $this->numberOfBoxes = $this->numberOfBoxes + 1;
       $stmt = $this->dbConnect->prepare(" INSERT INTO box(box_id)
       VALUES (" . $this->numberOfBoxes . ") ");
       $stmt->execute();
+    }
+
+    public function getBoxes()
+    {
+      return $this->boxes;
+    }
+
+    public function getNumberOfBoxes()
+    {
+      return $this->numberOfBoxes;
     }
 
     public function deleteBox($boxID)
@@ -84,6 +84,8 @@
             echo $e->getMessage();
           }
       } else {
+        // Todo: die karte darf nicht gelöscht werden
+        // die gelernte Karte nach neue Tabelle verschieben
         $box = new Box($boxID, $this->dbConnect);
         $box->deleteCard($cardID);
       }

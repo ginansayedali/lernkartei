@@ -8,13 +8,11 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
 ?>
 <html>
   <head>
-
     <meta charset="utf-8">
     <title>Lernkartei</title>
     <link rel="stylesheet" href="<?php echo $css ?>bootstrap.min.css" />
     <link rel="stylesheet" href="<?php echo $css ?>bootstrap.css" />
     <link rel="stylesheet" href="<?php echo $css ?>main.css" />
-
   </head>
   <body>
     <div class="container">
