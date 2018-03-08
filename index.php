@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-<?php include 'init.php';?>
+<?php require_once 'app/loader.php';
+use lernkartei\classes\Game;
+use lernkartei\classes\Card;
+use lernkartei\classes\Box;
+require_once dirname(__FILE__).'/app/lernkartei/init/connect.php';
+require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
+?>
 <html>
   <head>
     <meta charset="utf-8">

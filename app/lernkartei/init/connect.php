@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . '/../config.php';
+include __DIR__ . '/../../../config.php';
 
 $dsn = 'mysql:host='. DB_HOST .';dbname=' . DB_NAME . '';
 $user = '' . DB_PASSWORD . '';

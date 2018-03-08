@@ -1,4 +1,4 @@
-<?php
+<?php namespace lernkartei\classes;
 
   class Game
   {
@@ -11,7 +11,7 @@
     {
       $this->dbConnect = $dbConnect;
       $stmt = $dbConnect->query(" SELECT * FROM box ORDER BY box_id");
-      $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);
+      $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
       for ($i = 0; $i < count($fetchResult) ; $i++ ){
           $this->boxes[$i] = new Box($fetchResult[$i]['box_id'], $dbConnect);
           $this->boxes[$i]->setBoxID($fetchResult[$i]['box_id']);

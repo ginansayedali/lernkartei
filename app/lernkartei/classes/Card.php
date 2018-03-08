@@ -1,4 +1,4 @@
-<?php
+<?php namespace lernkartei\classes;
 
 class Card
 {

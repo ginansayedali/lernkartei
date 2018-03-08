@@ -1,4 +1,4 @@
-<?php
+<?php namespace lernkartei\classes;
 
 class Box
 {
@@ -97,7 +97,7 @@ class Box
     try {
       $stmt = $this->dbConnect->query(" SELECT COUNT(*) FROM box_has_card
       WHERE box=" . $this->boxID );
-      $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);
+      $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
       $cardCount = $fetchResult[0]['COUNT(*)'];
       return $cardCount;
     } catch (PDOException $e){
@@ -125,7 +125,7 @@ class Box
       $stmt = $this->dbConnect->query(" SELECT id, create_date, word, word_meaning
         FROM cards JOIN box_has_card ON cards.id = box_has_card.card
         WHERE box_has_card.box=" . $this->boxID );
-      $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);
+      $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
     return $fetchResult;
     } catch (PDOException $e){
       echo $e->getMessage();
