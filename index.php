@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<?php require_once 'app/loader.php';
+<?php require_once 'vendor/autoload.php';
 use lernkartei\classes\Game;
 use lernkartei\classes\Card;
 use lernkartei\classes\Box;
@@ -8,11 +8,13 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
 ?>
 <html>
   <head>
+
     <meta charset="utf-8">
     <title>Lernkartei</title>
     <link rel="stylesheet" href="<?php echo $css ?>bootstrap.min.css" />
     <link rel="stylesheet" href="<?php echo $css ?>bootstrap.css" />
     <link rel="stylesheet" href="<?php echo $css ?>main.css" />
+
   </head>
   <body>
     <div class="container">

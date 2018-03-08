@@ -1,7 +1,12 @@
 {
+  "name": "vendor/lernkartei",
+  "description": "lernkartei",
   "autoload":{
     "psr-4": {
       "lernkartei\\": "app/lernkartei"
     }
+  },
+  "require": {
+    "twig/twig": "~2.0"
   }
 }
