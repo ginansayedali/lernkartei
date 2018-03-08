@@ -1,13 +1,13 @@
 <?php
 
-//Routes
+  //Routes
 
-$css 	= 'layout/css/'; // Css Directory
-$js 	= 'layout/js/'; // Js Directory
+  $css 	= 'layout/css/'; // Css Directory
+  $js 	= 'layout/js/'; // Js Directory
 
-// include classes
-include 'include/classes/Card.php';
-include 'include/classes/Box.php';
-include 'include/classes/Game.php';
-// include database connection
-include 'include/connect.php';
+  // include classes
+  include 'include/classes/Card.php';
+  include 'include/classes/Box.php';
+  include 'include/classes/Game.php';
+  // include database connection
+  include 'include/connect.php';
