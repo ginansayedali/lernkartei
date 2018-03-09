@@ -14,10 +14,18 @@ h1 {
 	font-weight: bold;
 	color: #666;
 }
+.min-height{
+	min-height: 36vh;
+}
 
 .input-container {
 	position: relative;
 }
+
+.hidden-class{
+	visibility: hidden;
+}
+
 
 .asterisk {
     font-size: 20px;
@@ -352,11 +360,20 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 }
 .btn{
 	margin: 7px;
-}  
+}
 
 @media (max-width: 575px){
 .setup-left-widget{
 
 	height: 20vh;
 }
+}
+
+.showanswer{
+	color: #e32;
+	display: block;
+	padding: 10px;
+	cursor: pointer;
+	width: 10em;
+	margin: 4px auto;
 }

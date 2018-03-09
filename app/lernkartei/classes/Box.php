@@ -85,7 +85,7 @@ class Box
       $stmt = $this->dbConnect->query(" SELECT id, create_date, word, word_meaning
         FROM cards JOIN box_has_card ON cards.id = box_has_card.card
         WHERE box_has_card.box=" . $this->boxID . " ORDER BY cards.id LIMIT 1" );
-      $fetchResult = $stmt->fetchall(PDO::FETCH_ASSOC);
+      $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
     return $fetchResult;
     } catch (PDOException $e){
       echo $e->getMessage();

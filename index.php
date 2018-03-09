@@ -82,33 +82,74 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
       }
     }
     ?>
+
+    <div class="container">
+      <div class="row min-height">
+        <div class="col-sm-6">
+
+          <?php
+          $go = isset($_GET['do']) ? $_GET['do'] : 'move';
+          if ($go == 'getcard'){
+            $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
+            $box = new Box($boxID,$dbConnect);
+            $card = $box->getFirstCard();
+
+            if (isset($card)){ ?>
+              <div class="card">
+                <div class="card-body">
+                  <p class="badge badge-secondary">Created on: <?php echo $card[0]["create_date"]  ?> </p>
+                  <p class="card-title text-center">
+                   <?php echo '<h1 class="text-center">'.$card[0]["word"]. '</h1>' ?>
+                   <span  class="showanswer btn btn-outline-secondary"> show</span>
+                  </p>
+                  <div class="show-answer hidden-class">
+                    <h1 class="card-text">
+                      <?php echo $card[0]["word_meaning"] ?>
+                    </h1>
+                     <button
+                     type="button"
+                     onclick='window.location.href=" <?php $_SERVER['PHP_SELF'];
+                     echo '?do=notsure&cardID=' . $card[0]['id'] . '&boxID=' . $box->getBoxID() ;?>
+                     "' class="btn btn-outline-secondary">Not sure</button>
+                     <button
+                     type="button"
+                     onclick='window.location.href=" <?php $_SERVER['PHP_SELF'];
+                     echo '?do=move&cardID=' . $card[0]['id'] . '&boxID=' . $box->getBoxID() ;?>
+                     "' class="btn btn-outline-success">I got it</button>
+                   </div>
+
+                </div>
+              </div>
+            <?php }
+            } ?>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
     <div class="container">
       <div class="row">
         <?php
         $boxes = $game->getBoxes();
-        foreach ($boxes as $box):
+        foreach ($boxes as $box){
         ?>
-        <div class="col-sm-4">
-          <h5 class="card-title"> Box: <?php echo $box->getBoxID() . ' '; ?>  Count:  <?php echo $box->getCardCount(); ?> </h5>
-          <?php foreach ($box->getCards() as $value): ?>
-            <div class="card">
-            <div class="card-body">
-            <p class="card-title"> Card ID: <span class="badge badge-secondary"> <?php echo $value['id']; ?> </span></p>
-            <h1 class="card-text"> <?php echo $value['word']; ?> </h1>
-            <p class="card-text"> <?php echo $value['word_meaning']; ?> </p> <br>
-            <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=notsure&cardID=<?php echo $value['id'] . "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-secondary">Not sure</button>
-            <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=move&cardID=<?php echo $value['id'] . "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-success">I got it</button>
+        <div class="col-sm-2">
+          <div class="card">
+            <div class="card-body"><span class="badge badge-secondary"> <?php echo $box->getCardCount();  ?> </span>
+              <h5 class="card-title"> Box: <?php echo $box->getBoxID() . ' '; ?> </h5>
+              <?php
+              if ($box->getCardCount() != 0): ?>
+              <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=getcard<?php echo "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-success">Show Card</button>
+            <?php endif; ?>
+
             </div>
-            <div class="card-footer">
-            <small class="text-muted">Created: <?php echo $value['create_date']; ?> </small>
-            </div>
-            </div>
-            <br>
-          <?php endforeach; ?>
+          </div>
         </div>
-        <?php endforeach; ?>
+        <br>
+      <?php }?>
       </div>
     </div>
+
     <script src="<?php echo $js ?>jquery-3.3.1.min.js"></script>
     <script src="<?php echo $js ?>jquery-ui.min.js"></script>
     <script src="<?php echo $js ?>bootstrap.min.js"></script>

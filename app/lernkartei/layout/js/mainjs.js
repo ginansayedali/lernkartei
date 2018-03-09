@@ -14,6 +14,17 @@ $(function () {
 
 	});
 
+	$('.card-body span').click(function () {
+
+		$(this).addClass('selected').siblings().removeClass('selected');
+
+		$('.show-answer').removeClass('hidden-class');
+
+		$(this).hide();
+
+
+	});
+
 	// Trigger The Selectboxit
 
 	$("select").selectBoxIt({
