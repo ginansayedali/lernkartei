@@ -87,7 +87,7 @@
         // Todo: die karte darf nicht gelöscht werden
         // die gelernte Karte nach neue Tabelle verschieben
         $box = new Box($boxID, $this->dbConnect);
-        $box->deleteCard($cardID);
+        $box->setAsLearned($cardID);
       }
     }
 

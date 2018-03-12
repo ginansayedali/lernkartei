@@ -4,13 +4,13 @@ class Card
 {
 
   private $cardID;
-  private $cardCreateDate;
+  private $cardCreatedDate;
   private $cardWord;
   private $cardWordMeaning;
 
   public function __construct()
   {
-    $this->cardCreateDate = strftime("%F %T");
+    $this->cardCreatedDate = strftime("%F %T");
   }
 
   public function setCardID($id)
@@ -23,9 +23,9 @@ class Card
     return $this->cardID;
   }
 
-  public function getCreateDate()
+  public function getCreatedDate()
   {
-    return $this->cardCreateDate;
+    return $this->cardCreatedDate;
   }
   public function setCardWord($word)
   {

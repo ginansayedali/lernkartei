@@ -3,6 +3,7 @@
 use lernkartei\classes\Game;
 use lernkartei\classes\Card;
 use lernkartei\classes\Box;
+use lernkartei\classes\DBqueries;
 require_once dirname(__FILE__).'/app/lernkartei/init/connect.php';
 require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
 ?>
@@ -85,7 +86,7 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
 
     <div class="container">
       <div class="row min-height">
-        <div class="col-sm-6">
+        <div class="col-sm-12 col-md-12 col-lg-6">
 
           <?php
           $go = isset($_GET['do']) ? $_GET['do'] : 'move';
@@ -96,8 +97,8 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
 
             if (isset($card)){ ?>
               <div class="card">
-                <div class="card-body">
-                  <p class="badge badge-secondary">Created on: <?php echo $card[0]["create_date"]  ?> </p>
+                <div class="card-body card-js">
+                  <p class="badge badge-secondary">Created on: <?php echo $card[0]["created_date"]  ?> </p>
                   <p class="card-title text-center">
                    <?php echo '<h1 class="text-center">'.$card[0]["word"]. '</h1>' ?>
                    <span  class="showanswer btn btn-outline-secondary"> show</span>
@@ -129,11 +130,33 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
     <br>
     <div class="container">
       <div class="row">
+        <div class="col-sm-10 col-md-10 col-lg-10">
+          <span class="badge badge-secondary" style="font-size: 13px">learned cards</span>
+        <div class="progress">
+          <?php $stmt = $dbConnect->query(" SELECT COUNT(*) FROM cards"  );
+          $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
+          $cardsCount = $fetchResult[0]['COUNT(*)'];
+
+          $stmt1 = $dbConnect->query(" SELECT COUNT(*) FROM learned_cards"  );
+          $fetch = $stmt1->fetchall(\PDO::FETCH_ASSOC);
+          $learnedCardsCount = $fetch[0]['COUNT(*)'];
+          ?>
+          <div class="progress-bar" role="progressbar" style="width: <?php echo $cardsCount+$learnedCardsCount ?>%;" aria-valuenow="<?php echo $learnedCardsCount ?>" aria-valuemin="0" aria-valuemax="<?php echo $cardsCount ?>"><?php echo $learnedCardsCount ?> von <?php echo $cardsCount+$learnedCardsCount ?> </div>
+        </div>
+      </div>
+      </div>
+      <br />
+      <div class="row">
         <?php
         $boxes = $game->getBoxes();
+        // $cardCountInBox = [];
+        // foreach ($boxes as $box){
+        //   $cardCountInBox[] = $box->getCardCount();
+        // }
+        // print_r($cardCountInBox);
         foreach ($boxes as $box){
         ?>
-        <div class="col-sm-2">
+        <div class="col-sm-6 col-md-4 col-lg-2">
           <div class="card">
             <div class="card-body"><span class="badge badge-secondary"> <?php echo $box->getCardCount();  ?> </span>
               <h5 class="card-title"> Box: <?php echo $box->getBoxID() . ' '; ?> </h5>

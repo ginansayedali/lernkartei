@@ -14,7 +14,7 @@ $(function () {
 
 	});
 
-	$('.card-body span').click(function () {
+	$('.card-js span').click(function () {
 
 		$(this).addClass('selected').siblings().removeClass('selected');
 
