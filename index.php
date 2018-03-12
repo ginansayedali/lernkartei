@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<?php require_once 'vendor/autoload.php';
+<?php
+require_once 'vendor/autoload.php';
+require_once 'app/lernkartei/init/connect.php';
+require_once 'app/lernkartei/init/routes.php';
+
 use lernkartei\classes\Game;
 use lernkartei\classes\Card;
 use lernkartei\classes\Box;
 use lernkartei\classes\DBqueries;
-require_once dirname(__FILE__).'/app/lernkartei/init/connect.php';
-require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
+
 ?>
 <html>
   <head>
@@ -80,21 +83,17 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
         $cardID = isset($_GET['cardID']) && is_numeric($_GET['cardID']) ? intval($_GET['cardID']) : 0;
         $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
         $game->moveCardToFirstBox($cardID, $boxID);
+      } elseif ($do == 'getcard'){
+        $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
+        $box = new Box($boxID,$dbConnect);
+        $card = $box->getFirstCard();
       }
     }
     ?>
-
     <div class="container">
       <div class="row min-height">
         <div class="col-sm-12 col-md-12 col-lg-6">
-
           <?php
-          $go = isset($_GET['do']) ? $_GET['do'] : 'move';
-          if ($go == 'getcard'){
-            $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
-            $box = new Box($boxID,$dbConnect);
-            $card = $box->getFirstCard();
-
             if (isset($card)){ ?>
               <div class="card">
                 <div class="card-body card-js">
@@ -118,11 +117,9 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
                      echo '?do=move&cardID=' . $card[0]['id'] . '&boxID=' . $box->getBoxID() ;?>
                      "' class="btn btn-outline-success">I got it</button>
                    </div>
-
                 </div>
               </div>
-            <?php }
-            } ?>
+            <?php }?>
         </div>
       </div>
     </div>
@@ -149,11 +146,6 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
       <div class="row">
         <?php
         $boxes = $game->getBoxes();
-        // $cardCountInBox = [];
-        // foreach ($boxes as $box){
-        //   $cardCountInBox[] = $box->getCardCount();
-        // }
-        // print_r($cardCountInBox);
         foreach ($boxes as $box){
         ?>
         <div class="col-sm-6 col-md-4 col-lg-2">
@@ -164,7 +156,6 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
               if ($box->getCardCount() != 0): ?>
               <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=getcard<?php echo "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-success">Show Card</button>
             <?php endif; ?>
-
             </div>
           </div>
         </div>
