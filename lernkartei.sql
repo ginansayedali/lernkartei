@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 12. Mrz 2018 um 13:26
+-- Erstellungszeit: 12. Mrz 2018 um 14:59
 -- Server-Version: 5.7.21-0ubuntu0.16.04.1
 -- PHP-Version: 7.2.3-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -59,28 +59,14 @@ CREATE TABLE `box_has_card` (
 --
 
 INSERT INTO `box_has_card` (`box`, `card`) VALUES
-(2, 580),
-(1, 581),
-(1, 582),
-(1, 583),
-(1, 584),
-(1, 585),
-(1, 586),
-(1, 587),
-(1, 588),
-(1, 589),
-(1, 590),
-(1, 591),
-(1, 592),
-(1, 593),
-(1, 594),
-(1, 595),
-(1, 596),
-(1, 597),
-(1, 598),
-(1, 599),
-(1, 600),
-(1, 601);
+(4, 602),
+(3, 603),
+(2, 604),
+(2, 605),
+(2, 606),
+(1, 607),
+(1, 608),
+(1, 609);
 
 -- --------------------------------------------------------
 
@@ -92,7 +78,7 @@ CREATE TABLE `cards` (
   `id` int(11) NOT NULL,
   `created_date` datetime NOT NULL,
   `word` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `word_meaning` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+  `word_meaning` varchar(500) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -100,28 +86,14 @@ CREATE TABLE `cards` (
 --
 
 INSERT INTO `cards` (`id`, `created_date`, `word`, `word_meaning`) VALUES
-(580, '2018-03-12 11:32:54', 'Card15', 'Card15'),
-(581, '2018-03-12 11:32:57', 'Card15', 'Card15'),
-(582, '2018-03-12 11:32:59', 'Card15', 'Card15'),
-(583, '2018-03-12 11:33:01', 'Card15', 'Card15'),
-(584, '2018-03-12 11:33:32', 'Card15', 'Card15'),
-(585, '2018-03-12 11:33:47', 'Card15', 'Card15'),
-(586, '2018-03-12 11:34:26', 'Card15', 'Card15'),
-(587, '2018-03-12 11:36:15', 'Card15', 'Card15'),
-(588, '2018-03-12 11:37:11', 'Card15', 'Card15'),
-(589, '2018-03-12 11:37:45', 'Card15', 'Card15'),
-(590, '2018-03-12 11:38:06', 'Card15', 'Card15'),
-(591, '2018-03-12 11:38:28', 'Card15', 'Card15'),
-(592, '2018-03-12 11:38:48', 'Card15', 'Card15'),
-(593, '2018-03-12 11:39:26', 'Card15', 'Card15'),
-(594, '2018-03-12 11:40:33', 'Card15', 'Card15'),
-(595, '2018-03-12 11:40:41', 'Card15', 'Card15'),
-(596, '2018-03-12 11:41:14', 'Card15', 'Card15'),
-(597, '2018-03-12 11:41:24', 'Card15', 'Card15'),
-(598, '2018-03-12 11:41:31', 'Card15', 'Card15'),
-(599, '2018-03-12 11:41:38', 'Card15', 'Card15'),
-(600, '2018-03-12 11:41:56', 'Card15', 'Card15'),
-(601, '2018-03-12 11:53:03', 'Card15', 'Card15');
+(602, '2018-03-12 14:45:01', 'OOP', 'Objektorientierte Programmierung'),
+(603, '2018-03-12 14:47:23', 'Composer', 'Dependency Manager for PHP'),
+(604, '2018-03-12 14:47:56', 'NPM', 'Package manager for JavaScript'),
+(605, '2018-03-12 14:50:29', 'Namespace', 'Namespaces sind abgetrennte Bereiche, in denen gewisse logische Dinge (in unserem Fall Klassen, Interfaces, Funktionen und Konstanten) leben können. Diese Bereiche sorgen für eine Aufteilung und Kapselung des Codes und verhindern Namenskonflikte.'),
+(606, '2018-03-12 14:51:51', 'JSON', 'JavaScript Object Notation'),
+(607, '2018-03-12 14:53:15', 'ACID', 'Es steht für englisch atomicity, consistency, isolation und durability. '),
+(608, '2018-03-12 14:55:19', 'Webpack', 'webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser'),
+(609, '2018-03-12 14:57:26', 'WebSocket ', 'is a computer communications protocol, providing full-duplex communication channels over a single TCP connection. ');
 
 -- --------------------------------------------------------
 
@@ -173,7 +145,9 @@ INSERT INTO `learned_cards` (`id`, `created_date`, `word`, `word_meaning`) VALUE
 (576, '2018-03-12 11:32:01', 'Card11', 'Card11'),
 (577, '2018-03-12 11:32:17', 'Card11', 'Card11'),
 (578, '2018-03-12 11:32:37', 'Card11', 'Card11'),
-(579, '2018-03-12 11:32:51', 'Card15', 'Card15');
+(579, '2018-03-12 11:32:51', 'Card15', 'Card15'),
+(580, '2018-03-12 11:32:54', 'Card15', 'Card15'),
+(581, '2018-03-12 11:32:57', 'Card15', 'Card15');
 
 -- --------------------------------------------------------
 
@@ -238,7 +212,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `cards`
 --
 ALTER TABLE `cards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=602;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=610;
 
 --
 -- AUTO_INCREMENT für Tabelle `users`

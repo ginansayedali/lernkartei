@@ -21,7 +21,7 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
         <div class="col-sm-6 col-md-6 col-lg-6">
           <div class=" login-page">
             <h1 class="text-center"> <span class="selected">Add card</span></h1>
-            <form class="database-setup" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
+            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
               <div class="input-container">
                 <input
                   class="form-control"
@@ -42,7 +42,7 @@ require_once dirname(__FILE__).'/app/lernkartei/init/routes.php';
               </div>
               <div class="input-container">
                 <input
-                  class ="btn btn-primary btn-block"
+                  class ="btn btn-outline-info"
                   name = "add_card"
                   type="submit"
                   value="Add" />
