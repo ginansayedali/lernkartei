@@ -146,7 +146,6 @@ use lernkartei\classes\ImageCard;
       <div class="row">
         <?php
         $boxes = $game->getBoxes();
-        print_r($boxes);
         foreach ($boxes as $box){
         ?>
         <div class="col-sm-6 col-md-4 col-lg-2">

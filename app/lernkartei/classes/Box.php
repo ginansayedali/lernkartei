@@ -32,9 +32,9 @@ class Box
     return $this->elements;
   }
 
-  public function getBoxCardCount($dbConnect)
-  {
-    $DBquery = new DBqueries($dbConnect);
-    return $DBquery->queryGetCardCount($this->boxID);
-  }
+  // public function getBoxCardCount($dbConnect)
+  // {
+  //   $DBquery = new DBqueries($dbConnect);
+  //   return $DBquery->queryGetCardCount($this->boxID);
+  // }
 }

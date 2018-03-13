@@ -15,9 +15,8 @@ use lernkartei\classes\TextCard;
 use lernkartei\classes\ImageCard;
 
 $game = new Game($dbConnect);
-$DBquery = new DBqueries($dbConnect);
+$dbQuery = new DBqueries($dbConnect);
 $boxes = $game->getBoxes();
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   if (isset($_POST['add_card'])) {
@@ -27,10 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $card->setQuestion($_POST['question']);
     $card->setAnswer($_POST['answer']);
     $box->add($card);
-    $DBquery->queryAddCardToBox($card, 1);
+    $dbQuery->queryAddCardToBox($card, 1);
   }
 }
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   $do = isset($_GET['do']) ? $_GET['do'] : 'move';
@@ -46,14 +44,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
     $box = new Box();
     $box->setBoxID($boxID);
-    $card = $DBquery->queryGetFirstCard($boxID);
+    $firstCard = $dbQuery->queryGetFirstCard($boxID);
   }
 }
 
+$box = isset($box) ? $box : 0;
+$firstCard = isset($firstCard) ? $firstCard : 0;
+
+$cardsCount = $dbQuery->queryGetAllCardsCount();
+$learnedCardsCount = $dbQuery->queryGetLearnedCardsCount();
+$sumOfCards = $cardsCount + $learnedCardsCount;
 
 $loader = new Twig_Loader_Filesystem('templates');
 $twig = new Twig_Environment($loader);
 
-echo $twig->render('homepage.php', array('boxes' => $boxes ,
-  'routes' => array('css' => $css, 'js' => $js), 'dbConnect' =>array('dbcon'=> $dbConnect), 'php' => array('self' => $_SERVER['PHP_SELF'])
+echo $twig->render('Game.php', array(
+  'box'       => $box,
+  'boxes'     => $boxes,
+  'firstCard' => $firstCard,
+  'cardCount' => $cardsCount,
+  'learnedCardsCount' => $learnedCardsCount,
+  'sumOfCards' => $sumOfCards,
+  'routes'    => array('css' => $css, 'js' => $js),
+  'dbQuery'   => $dbQuery,
+  'php'       => array('self' => $_SERVER['PHP_SELF'])
 ));
