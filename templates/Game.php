@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>Lernkartei </title>
     <link rel="stylesheet" href="{{ routes.css }}bootstrap.min.css" />
-    <link rel="stylesheet" href="{{ routes.css }}bootstrap.css" />
     <link rel="stylesheet" href="{{ routes.css }}main.css" />
   </head>
   <body>
@@ -31,6 +30,12 @@
                   autocomplete="off"
                   placeholder="Answer"
                   required />
+              </div>
+              <div class="form-group">
+                <select class="form-control" name="card_type">
+                  <option value="text">Text Card</option>
+                  <option value="image">Image Card</option>
+                </select>
               </div>
               <div class="input-container">
                 <input
@@ -113,9 +118,7 @@
       </div>
     </div>
     <script src="{{ routes.js }}jquery-3.3.1.min.js"></script>
-    <script src="{{ routes.js }}jquery-ui.min.js"></script>
     <script src="{{ routes.js }}bootstrap.min.js"></script>
-    <script src="{{ routes.js }}jquery.selectBoxIt.min.js"></script>
     <script src="{{ routes.js }}mainjs.js"></script>
   </body>
 </html>

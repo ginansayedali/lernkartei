@@ -19,10 +19,18 @@ $dbQuery = new DBqueries($dbConnect);
 $boxes = $game->getBoxes();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  if (isset($_POST['add_card'])) {
+  if (isset($_POST['add_card']) && $_POST['card_type'] == 'text') {
     $box = new Box();
     $box->setBoxID(1);
     $card = new TextCard();
+    $card->setQuestion($_POST['question']);
+    $card->setAnswer($_POST['answer']);
+    $box->add($card);
+    $dbQuery->queryAddCardToBox($card, 1);
+  } elseif (isset($_POST['add_card']) && $_POST['card_type'] == 'image'){
+    $box = new Box();
+    $box->setBoxID(1);
+    $card = new ImageCard();
     $card->setQuestion($_POST['question']);
     $card->setAnswer($_POST['answer']);
     $box->add($card);

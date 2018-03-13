@@ -13,14 +13,6 @@ $(function () {
 
 	});
 
-	// Trigger The Selectboxit
-
-	$("select").selectBoxIt({
-
-		autoWidth: false
-
-	});
-
 
 	// Hide Placeholder On Form Focus
 
