@@ -55,8 +55,8 @@
 
               $sqlCards = "CREATE table cards(
                             id INT( 11 ) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-                            word VARCHAR( 50 ) NOT NULL,
-                            word_meaning VARCHAR( 50 ) NOT NULL);" ;
+                            question VARCHAR( 50 ) NOT NULL,
+                            answer VARCHAR( 50 ) NOT NULL);" ;
 
               $sqlBoxHasCard = "CREATE table box_has_card(
                                 box INT( 4 ) NOT NULL,
@@ -83,11 +83,11 @@
                 'zemail' => 'admin@lernkartei'
               ));
 
-              $stmt = $dbConnect->prepare(" INSERT INTO cards(word, word_meaning)
-                VALUES (:zword, :zmeaning) ");
+              $stmt = $dbConnect->prepare(" INSERT INTO cards(question, answer)
+                VALUES (:zquestion, :zanswer) ");
               $stmt->execute(array(
-                'zword' => 'lernkartei',
-                'zmeaning' => 'So lernt man lernen'
+                'zquestion' => 'lernkartei',
+                'zanswer' => 'So lernt man lernen'
               ));
 
               $stmt = $dbConnect->prepare(" INSERT INTO box_has_card(box, card)

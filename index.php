@@ -8,7 +8,8 @@ use lernkartei\classes\Game;
 use lernkartei\classes\Card;
 use lernkartei\classes\Box;
 use lernkartei\classes\DBqueries;
-
+use lernkartei\classes\TextCard;
+use lernkartei\classes\ImageCard;
 ?>
 <html>
   <head>
@@ -29,18 +30,18 @@ use lernkartei\classes\DBqueries;
                 <input
                   class="form-control"
                   type="text"
-                  name="card_word"
+                  name="question"
                   autocomplete="off"
-                  placeholder="Word"
+                  placeholder="Question"
                   required />
               </div>
               <div class="input-container">
                 <input
                   class="form-control"
                   type="text"
-                  name="card_meaning"
+                  name="answer"
                   autocomplete="off"
-                  placeholder="Meaning"
+                  placeholder="Answer"
                   required />
               </div>
               <div class="input-container">
@@ -68,9 +69,9 @@ use lernkartei\classes\DBqueries;
       if (isset($_POST['add_card'])) {
         $box = new Box();
         $box->setBoxID(1);
-        $card = new Card();
-  	    $card->setCardWord($_POST['card_word']);
-  	    $card->setCardWordMeaning($_POST['card_meaning']);
+        $card = new TextCard();
+  	    $card->setQuestion($_POST['question']);
+  	    $card->setAnswer($_POST['answer']);
         $box->add($card);
         $DBquery->queryAddCardToBox($card, 1);
       }
@@ -80,7 +81,6 @@ use lernkartei\classes\DBqueries;
       <div class="row min-height">
         <div class="col-sm-12 col-md-12 col-lg-6">
     <?php
-    // $box->removeCard(481,1);
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $do = isset($_GET['do']) ? $_GET['do'] : 'move';
       if ($do == 'move'){
@@ -96,19 +96,18 @@ use lernkartei\classes\DBqueries;
         $box = new Box();
         $box->setBoxID($boxID);
         $card = $DBquery->queryGetFirstCard($boxID);
-        // $card = $box->getFirstCard();
       }
         if (isset($card)){ ?>
           <div class="card">
             <div class="card-body card-js">
               <p class="badge badge-secondary">Created on: <?php echo $card[0]["created_date"]  ?> </p>
               <p class="card-title text-center">
-               <?php echo '<h1 class="text-center">'.$card[0]["word"]. '</h1>' ?>
+               <?php echo '<h1 class="text-center">'.$card[0]["question"]. '</h1>' ?>
                <span  class="showanswer btn btn-outline-secondary"> show</span>
               </p>
               <div class="show-answer hidden-class">
                 <h1 class="card-text">
-                  <?php echo $card[0]["word_meaning"] ?>
+                  <?php echo $card[0]["answer"] ?>
                 </h1>
                  <button
                  type="button"
@@ -147,6 +146,7 @@ use lernkartei\classes\DBqueries;
       <div class="row">
         <?php
         $boxes = $game->getBoxes();
+        print_r($boxes);
         foreach ($boxes as $box){
         ?>
         <div class="col-sm-6 col-md-4 col-lg-2">

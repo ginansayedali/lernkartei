@@ -353,5 +353,8 @@ return array(
     'Twig_Util_TemplateDirIterator' => $vendorDir . '/twig/twig/lib/Twig/Util/TemplateDirIterator.php',
     'lernkartei\\classes\\Box' => $baseDir . '/app/lernkartei/classes/Box.php',
     'lernkartei\\classes\\Card' => $baseDir . '/app/lernkartei/classes/Card.php',
+    'lernkartei\\classes\\DBqueries' => $baseDir . '/app/lernkartei/classes/DBqueries.php',
     'lernkartei\\classes\\Game' => $baseDir . '/app/lernkartei/classes/Game.php',
+    'lernkartei\\classes\\ImageCard' => $baseDir . '/app/lernkartei/classes/ImageCard.php',
+    'lernkartei\\classes\\TextCard' => $baseDir . '/app/lernkartei/classes/TextCard.php',
 );

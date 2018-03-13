@@ -1,51 +1,27 @@
-<?php namespace lernkartei\classes;
+<?php
 
-class Card
+namespace lernkartei\classes;
+
+abstract class Card
 {
-
+  
   private $cardID;
   private $cardCreatedDate;
-  private $cardWord;
-  private $cardWordMeaning;
+  private $question;
+  private $answer;
 
-  public function __construct()
-  {
-    $this->cardCreatedDate = strftime("%F %T");
-  }
+  abstract public function setCardID($id);
 
-  public function setCardID($id)
-  {
-    $this->cardID = $id;
-  }
+  abstract public function getCardID();
 
-  public function getCardID()
-  {
-    return $this->cardID;
-  }
+  abstract public function getCreatedDate();
 
-  public function getCreatedDate()
-  {
-    return $this->cardCreatedDate;
-  }
-  public function setCardWord($word)
-  {
-    // todo: user input muss geprüft werden
-    $this->cardWord = $word;
-  }
+  abstract public function setQuestion($question);
 
-  public function getCardWord()
-  {
-    return $this->cardWord;
-  }
+  abstract public function getQuestion();
 
-  public function setCardWordMeaning($wordMeaning)
-  {
-    // todo: user input muss geprüft werden
-    $this->cardWordMeaning = $wordMeaning;
-  }
+  abstract public function setAnswer($answer);
 
-  public function getCardWordMeaning()
-  {
-    return $this->cardWordMeaning;
-  }
+  abstract public function getAnswer();
+
 }

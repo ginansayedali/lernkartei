@@ -398,7 +398,10 @@ class ComposerStaticInit4edb17f88f9164e5dd4faaf41018964d
         'Twig_Util_TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/lib/Twig/Util/TemplateDirIterator.php',
         'lernkartei\\classes\\Box' => __DIR__ . '/../..' . '/app/lernkartei/classes/Box.php',
         'lernkartei\\classes\\Card' => __DIR__ . '/../..' . '/app/lernkartei/classes/Card.php',
+        'lernkartei\\classes\\DBqueries' => __DIR__ . '/../..' . '/app/lernkartei/classes/DBqueries.php',
         'lernkartei\\classes\\Game' => __DIR__ . '/../..' . '/app/lernkartei/classes/Game.php',
+        'lernkartei\\classes\\ImageCard' => __DIR__ . '/../..' . '/app/lernkartei/classes/ImageCard.php',
+        'lernkartei\\classes\\TextCard' => __DIR__ . '/../..' . '/app/lernkartei/classes/TextCard.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

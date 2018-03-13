@@ -1,4 +1,6 @@
-<?php namespace lernkartei\classes;
+<?php
+
+namespace lernkartei\classes;
 
 class Box
 {
@@ -28,5 +30,11 @@ class Box
   public function getCards()
   {
     return $this->elements;
+  }
+
+  public function getBoxCardCount($dbConnect)
+  {
+    $DBquery = new DBqueries($dbConnect);
+    return $DBquery->queryGetCardCount($this->boxID);
   }
 }

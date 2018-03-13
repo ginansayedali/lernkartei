@@ -1,4 +1,6 @@
-<?php namespace lernkartei\classes;
+<?php
+
+namespace lernkartei\classes;
 
   class Game
   {

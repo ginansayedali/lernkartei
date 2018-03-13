@@ -1,4 +1,6 @@
-<?php namespace lernkartei\classes;
+<?php
+
+namespace lernkartei\classes;
 
 class DBqueries
 {
@@ -13,12 +15,13 @@ class DBqueries
   {
     if (!$card->getCardID()){
       try {
-        $stmt = $this->dbConnect->prepare(" INSERT INTO cards(created_date, word,
-          word_meaning) VALUES (:zcdate, :zword, :zmeaning) ");
+        $stmt = $this->dbConnect->prepare(" INSERT INTO cards(created_date, question,
+          answer, type) VALUES (:zcdate, :zquestion, :zanswer, :ztype) ");
         $stmt->execute(array(
           'zcdate' => $card->getCreatedDate(),
-          'zword' => $card->getCardWord(),
-          'zmeaning' =>  $card->getCardWordMeaning()
+          'zquestion' => $card->getQuestion(),
+          'zanswer' =>  $card->getAnswer(),
+          'ztype' => $card::cardType
         ));
       } catch (PDOException $e){
         echo $e->getMessage();
@@ -52,7 +55,7 @@ class DBqueries
   public function queryGetFirstCard($boxID)
   {
     try {
-      $stmt = $this->dbConnect->query(" SELECT id, created_date, word, word_meaning
+      $stmt = $this->dbConnect->query(" SELECT id, created_date, question, answer
         FROM cards JOIN box_has_card ON cards.id = box_has_card.card
         WHERE box_has_card.box=" . $boxID . " ORDER BY cards.id LIMIT 1" );
       $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
@@ -65,7 +68,7 @@ class DBqueries
   public function queryGetCards($boxID)
   {
     try {
-      $stmt = $this->dbConnect->query(" SELECT id, created_date, word, word_meaning
+      $stmt = $this->dbConnect->query(" SELECT id, created_date, question, answer
         FROM cards JOIN box_has_card ON cards.id = box_has_card.card
         WHERE box_has_card.box=" . $boxID );
       $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
@@ -99,8 +102,8 @@ class DBqueries
     }
 
     try {
-    $stmt = $this->dbConnect->prepare(" INSERT INTO learned_cards(id, created_date, word, word_meaning)
-    SELECT id, created_date, word, word_meaning
+    $stmt = $this->dbConnect->prepare(" INSERT INTO learned_cards(id, created_date, question, answer, type)
+    SELECT id, created_date, question, answer, type
     FROM cards WHERE id=". $id );
     $stmt->execute();
     } catch (PDOException $e){
