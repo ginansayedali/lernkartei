@@ -62,16 +62,24 @@ use lernkartei\classes\DBqueries;
     error_reporting(E_ALL);
 
     $game = new Game($dbConnect);
+    $DBquery = new DBqueries($dbConnect);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       if (isset($_POST['add_card'])) {
-        $box = new Box(1,$dbConnect);
+        $box = new Box();
+        $box->setBoxID(1);
         $card = new Card();
   	    $card->setCardWord($_POST['card_word']);
   	    $card->setCardWordMeaning($_POST['card_meaning']);
         $box->add($card);
+        $DBquery->queryAddCardToBox($card, 1);
       }
     }
+    ?>
+    <div class="container">
+      <div class="row min-height">
+        <div class="col-sm-12 col-md-12 col-lg-6">
+    <?php
     // $box->removeCard(481,1);
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $do = isset($_GET['do']) ? $_GET['do'] : 'move';
@@ -83,49 +91,39 @@ use lernkartei\classes\DBqueries;
         $cardID = isset($_GET['cardID']) && is_numeric($_GET['cardID']) ? intval($_GET['cardID']) : 0;
         $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
         $game->moveCardToFirstBox($cardID, $boxID);
+      } elseif ($do == 'getcard'){
+        $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
+        $box = new Box();
+        $box->setBoxID($boxID);
+        $card = $DBquery->queryGetFirstCard($boxID);
+        // $card = $box->getFirstCard();
       }
-    }
-    ?>
-
-    <div class="container">
-      <div class="row min-height">
-        <div class="col-sm-12 col-md-12 col-lg-6">
-
-          <?php
-          $go = isset($_GET['do']) ? $_GET['do'] : 'move';
-          if ($go == 'getcard'){
-            $boxID = isset($_GET['boxID']) && is_numeric($_GET['boxID']) ? intval($_GET['boxID']) : 0;
-            $box = new Box($boxID,$dbConnect);
-            $card = $box->getFirstCard();
-
-            if (isset($card)){ ?>
-              <div class="card">
-                <div class="card-body card-js">
-                  <p class="badge badge-secondary">Created on: <?php echo $card[0]["created_date"]  ?> </p>
-                  <p class="card-title text-center">
-                   <?php echo '<h1 class="text-center">'.$card[0]["word"]. '</h1>' ?>
-                   <span  class="showanswer btn btn-outline-secondary"> show</span>
-                  </p>
-                  <div class="show-answer hidden-class">
-                    <h1 class="card-text">
-                      <?php echo $card[0]["word_meaning"] ?>
-                    </h1>
-                     <button
-                     type="button"
-                     onclick='window.location.href=" <?php $_SERVER['PHP_SELF'];
-                     echo '?do=notsure&cardID=' . $card[0]['id'] . '&boxID=' . $box->getBoxID() ;?>
-                     "' class="btn btn-outline-secondary">Not sure</button>
-                     <button
-                     type="button"
-                     onclick='window.location.href=" <?php $_SERVER['PHP_SELF'];
-                     echo '?do=move&cardID=' . $card[0]['id'] . '&boxID=' . $box->getBoxID() ;?>
-                     "' class="btn btn-outline-success">I got it</button>
-                   </div>
-
-                </div>
+        if (isset($card)){ ?>
+          <div class="card">
+            <div class="card-body card-js">
+              <p class="badge badge-secondary">Created on: <?php echo $card[0]["created_date"]  ?> </p>
+              <p class="card-title text-center">
+               <?php echo '<h1 class="text-center">'.$card[0]["word"]. '</h1>' ?>
+               <span  class="showanswer btn btn-outline-secondary"> show</span>
+              </p>
+              <div class="show-answer hidden-class">
+                <h1 class="card-text">
+                  <?php echo $card[0]["word_meaning"] ?>
+                </h1>
+                 <button
+                 type="button"
+                 onclick='window.location.href=" <?php $_SERVER['PHP_SELF'];
+                 echo '?do=notsure&cardID=' . $card[0]['id'] . '&boxID=' . $box->getBoxID() ;?>
+                 "' class="btn btn-outline-secondary">Not sure</button>
+                 <button
+                 type="button"
+                 onclick='window.location.href=" <?php $_SERVER['PHP_SELF'];
+                 echo '?do=move&cardID=' . $card[0]['id'] . '&boxID=' . $box->getBoxID() ;?>
+                 "' class="btn btn-outline-success">I got it</button>
               </div>
-            <?php }
-            } ?>
+            </div>
+          </div>
+        <?php } } ?>
         </div>
       </div>
     </div>
@@ -136,15 +134,12 @@ use lernkartei\classes\DBqueries;
         <div class="col-sm-10 col-md-10 col-lg-10">
           <span class="badge badge-secondary" style="font-size: 13px">learned cards</span>
         <div class="progress">
-          <?php $stmt = $dbConnect->query(" SELECT COUNT(*) FROM cards"  );
-          $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
-          $cardsCount = $fetchResult[0]['COUNT(*)'];
-
-          $stmt1 = $dbConnect->query(" SELECT COUNT(*) FROM learned_cards"  );
-          $fetch = $stmt1->fetchall(\PDO::FETCH_ASSOC);
-          $learnedCardsCount = $fetch[0]['COUNT(*)'];
+          <?php
+          $cardsCount = $DBquery->queryGetAllCardsCount();
+          $learnedCardsCount = $DBquery->queryGetLearnedCardsCount();
+          $sumOfCards = $cardsCount + $learnedCardsCount;
           ?>
-          <div class="progress-bar" role="progressbar" style="width: <?php echo $cardsCount+$learnedCardsCount ?>%;" aria-valuenow="<?php echo $learnedCardsCount ?>" aria-valuemin="0" aria-valuemax="<?php echo $cardsCount ?>"><?php echo $learnedCardsCount ?> von <?php echo $cardsCount+$learnedCardsCount ?> </div>
+          <div class="progress-bar" role="progressbar" style="width: <?php echo ($learnedCardsCount / $sumOfCards) * 100 ?>%;" aria-valuenow="<?php echo $learnedCardsCount ?>" aria-valuemin="<?php echo $cardsCount ?>" aria-valuemax="<?php echo $sumOfCards ?>"><?php echo $learnedCardsCount ?> von <?php echo $sumOfCards  ?> </div>
         </div>
       </div>
       </div>
@@ -152,22 +147,16 @@ use lernkartei\classes\DBqueries;
       <div class="row">
         <?php
         $boxes = $game->getBoxes();
-        // $cardCountInBox = [];
-        // foreach ($boxes as $box){
-        //   $cardCountInBox[] = $box->getCardCount();
-        // }
-        // print_r($cardCountInBox);
         foreach ($boxes as $box){
         ?>
         <div class="col-sm-6 col-md-4 col-lg-2">
           <div class="card">
-            <div class="card-body"><span class="badge badge-secondary"> <?php echo $box->getCardCount();  ?> </span>
+            <div class="card-body"><span class="badge badge-secondary"> <?php echo $DBquery->queryGetCardCount($box->getBoxID());  ?> </span>
               <h5 class="card-title"> Box: <?php echo $box->getBoxID() . ' '; ?> </h5>
               <?php
-              if ($box->getCardCount() != 0): ?>
+              if ($DBquery->queryGetCardCount($box->getBoxID()) != 0): ?>
               <button type="button" onclick='window.location.href="<?php $_SERVER['PHP_SELF']?>?do=getcard<?php echo "&boxID=". $box->getBoxID();?>"' class="btn btn-outline-success">Show Card</button>
-            <?php endif; ?>
-
+              <?php endif; ?>
             </div>
           </div>
         </div>

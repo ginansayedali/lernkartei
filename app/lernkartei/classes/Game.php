@@ -13,7 +13,7 @@
       $stmt = $dbConnect->query(" SELECT * FROM box ORDER BY box_id");
       $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
       for ($i = 0; $i < count($fetchResult) ; $i++ ){
-          $this->boxes[$i] = new Box($fetchResult[$i]['box_id'], $dbConnect);
+          $this->boxes[$i] = new Box();
           $this->boxes[$i]->setBoxID($fetchResult[$i]['box_id']);
       }
       $this->numberOfBoxes = count($this->boxes);
@@ -35,9 +35,6 @@
     public function addBox()
     {
       $this->numberOfBoxes = $this->numberOfBoxes + 1;
-      $stmt = $this->dbConnect->prepare(" INSERT INTO box(box_id)
-      VALUES (" . $this->numberOfBoxes . ") ");
-      $stmt->execute();
     }
 
     public function getBoxes()
@@ -54,16 +51,11 @@
     {
       if ($this->numberOfBoxes != 0);
       unset($this->boxes[$boxID]);
-      $this->numberOfBoxes = $this->numberOfBoxes -1;
-      $stmt = $this->dbConnect->prepare(" DELETE FROM box WHERE box_id=" . $boxID);
-      $stmt->execute();
     }
 
     public function deleteAllBoxes()
     {
       $this->numberOfBoxes = 0;
-      $stmt = $this->dbConnect->prepare(" DELETE FROM box ");
-      $stmt->execute();
     }
 
     public function moveCardToNextBox($cardID,$boxID)
@@ -84,10 +76,11 @@
             echo $e->getMessage();
           }
       } else {
-        // Todo: die karte darf nicht gelöscht werden
-        // die gelernte Karte nach neue Tabelle verschieben
-        $box = new Box($boxID, $this->dbConnect);
-        $box->setAsLearned($cardID);
+        // $box = new Box();
+        // $box->setBoxID($boxID);
+        // $box->setAsLearned($cardID);
+        $DBquery = new DBqueries($this->dbConnect);
+        $DBquery->querySetAsLearnd($cardID, $boxID);
       }
     }
 

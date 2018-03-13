@@ -114,4 +114,51 @@ class DBqueries
       echo $e->getMessage();
     }
   }
+
+  public function queryAddBox($num,$existedBox)
+  {
+    $newCount = $num + $existedBox;
+    try {
+      $stmt = $dbConnect->prepare(" INSERT INTO box(box_id)
+      VALUES (" . $newCount . ") ");
+      $stmt->execute();
+    } catch (PDOException $e){
+    echo $e->getMessage();
+    }
+  }
+
+  public function queryDeleteBox($boxID)
+  {
+    try {
+      $stmt = $this->dbConnect->prepare(" DELETE FROM box WHERE box_id=" . $boxID);
+      $stmt->execute();
+    } catch (PDOException $e){
+      echo $e->getMessage();
+    }
+  }
+
+  public function queryDeleteAllBoxes()
+  {
+    try {
+      $stmt = $this->dbConnect->prepare(" DELETE FROM box ");
+      $stmt->execute();
+    } catch (PDOException $e){
+      echo $e->getMessage();
+    }
+  }
+
+  function queryGetAllCardsCount()
+  {
+    $stmt = $this->dbConnect->query(" SELECT COUNT(*) FROM cards"  );
+    $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
+    // $cardsCount = $fetchResult[0]['COUNT(*)'];
+    return $fetchResult[0]['COUNT(*)'];
+  }
+
+  function queryGetLearnedCardsCount()
+  {
+    $stmt = $this->dbConnect->query(" SELECT COUNT(*) FROM learned_cards"  );
+    $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
+    return $fetchResult[0]['COUNT(*)'];
+  }
 }
