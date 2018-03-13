@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Erstellungszeit: 12. Mrz 2018 um 14:59
--- Server-Version: 5.7.21-0ubuntu0.16.04.1
--- PHP-Version: 7.2.3-1+ubuntu16.04.1+deb.sury.org+1
+-- Generation Time: Mar 13, 2018 at 04:49 PM
+-- Server version: 5.7.21-0ubuntu0.16.04.1
+-- PHP Version: 7.2.3-1+ubuntu16.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Datenbank: `lernkartei`
+-- Database: `lernkartei`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `box`
+-- Table structure for table `box`
 --
 
 CREATE TABLE `box` (
@@ -33,7 +33,7 @@ CREATE TABLE `box` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Daten für Tabelle `box`
+-- Dumping data for table `box`
 --
 
 INSERT INTO `box` (`box_id`) VALUES
@@ -46,7 +46,7 @@ INSERT INTO `box` (`box_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `box_has_card`
+-- Table structure for table `box_has_card`
 --
 
 CREATE TABLE `box_has_card` (
@@ -55,50 +55,53 @@ CREATE TABLE `box_has_card` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Daten für Tabelle `box_has_card`
+-- Dumping data for table `box_has_card`
 --
 
 INSERT INTO `box_has_card` (`box`, `card`) VALUES
 (4, 602),
-(3, 603),
+(5, 603),
 (2, 604),
-(2, 605),
-(2, 606),
-(1, 607),
-(1, 608),
-(1, 609);
+(3, 605),
+(3, 606),
+(2, 607),
+(2, 608),
+(2, 609),
+(1, 648);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `cards`
+-- Table structure for table `cards`
 --
 
 CREATE TABLE `cards` (
   `id` int(11) NOT NULL,
   `created_date` datetime NOT NULL,
-  `word` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `word_meaning` varchar(500) COLLATE utf8_unicode_ci NOT NULL
+  `question` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `answer` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `type` enum('text','image') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'text'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Daten für Tabelle `cards`
+-- Dumping data for table `cards`
 --
 
-INSERT INTO `cards` (`id`, `created_date`, `word`, `word_meaning`) VALUES
-(602, '2018-03-12 14:45:01', 'OOP', 'Objektorientierte Programmierung'),
-(603, '2018-03-12 14:47:23', 'Composer', 'Dependency Manager for PHP'),
-(604, '2018-03-12 14:47:56', 'NPM', 'Package manager for JavaScript'),
-(605, '2018-03-12 14:50:29', 'Namespace', 'Namespaces sind abgetrennte Bereiche, in denen gewisse logische Dinge (in unserem Fall Klassen, Interfaces, Funktionen und Konstanten) leben können. Diese Bereiche sorgen für eine Aufteilung und Kapselung des Codes und verhindern Namenskonflikte.'),
-(606, '2018-03-12 14:51:51', 'JSON', 'JavaScript Object Notation'),
-(607, '2018-03-12 14:53:15', 'ACID', 'Es steht für englisch atomicity, consistency, isolation und durability. '),
-(608, '2018-03-12 14:55:19', 'Webpack', 'webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser'),
-(609, '2018-03-12 14:57:26', 'WebSocket ', 'is a computer communications protocol, providing full-duplex communication channels over a single TCP connection. ');
+INSERT INTO `cards` (`id`, `created_date`, `question`, `answer`, `type`) VALUES
+(602, '2018-03-12 14:45:01', 'OOP', 'Objektorientierte Programmierung', 'text'),
+(603, '2018-03-12 14:47:23', 'Composer', 'Dependency Manager for PHP', 'text'),
+(604, '2018-03-12 14:47:56', 'NPM', 'Package manager for JavaScript', 'text'),
+(605, '2018-03-12 14:50:29', 'Namespace', 'Namespaces sind abgetrennte Bereiche, in denen gewisse logische Dinge (in unserem Fall Klassen, Interfaces, Funktionen und Konstanten) leben können. Diese Bereiche sorgen für eine Aufteilung und Kapselung des Codes und verhindern Namenskonflikte.', 'text'),
+(606, '2018-03-12 14:51:51', 'JSON', 'JavaScript Object Notation', 'text'),
+(607, '2018-03-12 14:53:15', 'ACID', 'Es steht für englisch atomicity, consistency, isolation und durability. ', 'text'),
+(608, '2018-03-12 14:55:19', 'Webpack', 'webpack is a module bundler. Its main purpose is to bundle JavaScript files for usage in a browser', 'text'),
+(609, '2018-03-12 14:57:26', 'WebSocket ', 'is a computer communications protocol, providing full-duplex communication channels over a single TCP connection. ', 'text'),
+(648, '2018-03-13 13:46:49', 'Card from TextCard class', 'Card from TextCard class', 'text');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `game`
+-- Table structure for table `game`
 --
 
 CREATE TABLE `game` (
@@ -107,7 +110,7 @@ CREATE TABLE `game` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Daten für Tabelle `game`
+-- Dumping data for table `game`
 --
 
 INSERT INTO `game` (`player_name`, `number_of_boxes`) VALUES
@@ -116,43 +119,43 @@ INSERT INTO `game` (`player_name`, `number_of_boxes`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `learned_cards`
+-- Table structure for table `learned_cards`
 --
 
 CREATE TABLE `learned_cards` (
   `id` int(11) NOT NULL,
   `created_date` datetime NOT NULL,
-  `word` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `word_meaning` varchar(50) COLLATE utf8_unicode_ci NOT NULL
+  `question` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `answer` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
+  `type` enum('text','image') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'text'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Daten für Tabelle `learned_cards`
+-- Dumping data for table `learned_cards`
 --
 
-INSERT INTO `learned_cards` (`id`, `created_date`, `word`, `word_meaning`) VALUES
-(565, '2018-03-12 11:26:37', 'Card1', 'Card1'),
-(566, '2018-03-12 11:26:45', 'Card2', 'Card2'),
-(567, '2018-03-12 11:26:51', 'Card3', 'Card3'),
-(568, '2018-03-12 11:27:01', 'Card4', 'Card4'),
-(569, '2018-03-12 11:27:11', 'Card5', 'Card5'),
-(570, '2018-03-12 11:27:34', 'Card5', 'Card5'),
-(571, '2018-03-12 11:27:44', 'Card7', 'Card7'),
-(572, '2018-03-12 11:29:26', 'Card8', 'Card8'),
-(573, '2018-03-12 11:29:41', 'Card9', 'Card9'),
-(574, '2018-03-12 11:31:34', 'Card10', 'Card10'),
-(575, '2018-03-12 11:31:47', 'Card11', 'Card11'),
-(576, '2018-03-12 11:32:01', 'Card11', 'Card11'),
-(577, '2018-03-12 11:32:17', 'Card11', 'Card11'),
-(578, '2018-03-12 11:32:37', 'Card11', 'Card11'),
-(579, '2018-03-12 11:32:51', 'Card15', 'Card15'),
-(580, '2018-03-12 11:32:54', 'Card15', 'Card15'),
-(581, '2018-03-12 11:32:57', 'Card15', 'Card15');
+INSERT INTO `learned_cards` (`id`, `created_date`, `question`, `answer`, `type`) VALUES
+(621, '2018-03-13 10:28:19', 'Card', 'Card', 'text'),
+(622, '2018-03-13 10:48:12', 'Card', 'Card', 'text'),
+(623, '2018-03-13 11:57:38', 'Card', 'Card', 'text'),
+(624, '2018-03-13 11:57:51', 'Card', 'Card', 'text'),
+(625, '2018-03-13 12:06:23', 'Card', 'Card', 'text'),
+(626, '2018-03-13 12:06:27', 'Card', 'Card', 'text'),
+(627, '2018-03-13 12:06:29', 'Card', 'Card', 'text'),
+(628, '2018-03-13 12:06:30', 'Card', 'Card', 'text'),
+(629, '2018-03-13 12:06:31', 'Card', 'Card', 'text'),
+(630, '2018-03-13 12:06:32', 'Card', 'Card', 'text'),
+(631, '2018-03-13 12:06:32', 'Card', 'Card', 'text'),
+(632, '2018-03-13 12:06:34', 'Card', 'Card', 'text'),
+(633, '2018-03-13 12:06:35', 'Card', 'Card', 'text'),
+(634, '2018-03-13 12:06:36', 'Card', 'Card', 'text'),
+(635, '2018-03-13 12:06:37', 'Card', 'Card', 'text'),
+(636, '2018-03-13 12:42:41', 'Card', 'Card', 'text');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -163,59 +166,59 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Daten für Tabelle `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`) VALUES
 (1, 'admin', 'admin', 'admin@lernkartei');
 
 --
--- Indizes der exportierten Tabellen
+-- Indexes for dumped tables
 --
 
 --
--- Indizes für die Tabelle `box`
+-- Indexes for table `box`
 --
 ALTER TABLE `box`
   ADD PRIMARY KEY (`box_id`);
 
 --
--- Indizes für die Tabelle `box_has_card`
+-- Indexes for table `box_has_card`
 --
 ALTER TABLE `box_has_card`
   ADD PRIMARY KEY (`box`,`card`),
   ADD KEY `box_cards` (`card`);
 
 --
--- Indizes für die Tabelle `cards`
+-- Indexes for table `cards`
 --
 ALTER TABLE `cards`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `learned_cards`
+-- Indexes for table `learned_cards`
 --
 ALTER TABLE `learned_cards`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indizes für die Tabelle `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT für exportierte Tabellen
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT für Tabelle `cards`
+-- AUTO_INCREMENT for table `cards`
 --
 ALTER TABLE `cards`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=610;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=649;
 
 --
--- AUTO_INCREMENT für Tabelle `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
