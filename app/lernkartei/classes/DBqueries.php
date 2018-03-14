@@ -55,7 +55,7 @@ class DBqueries
   public function queryGetFirstCard($boxID)
   {
     try {
-      $stmt = $this->dbConnect->query(" SELECT id, created_date, question, answer
+      $stmt = $this->dbConnect->query(" SELECT id, created_date, question, answer, type
         FROM cards JOIN box_has_card ON cards.id = box_has_card.card
         WHERE box_has_card.box=" . $boxID . " ORDER BY cards.id LIMIT 1" );
       $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);
@@ -68,7 +68,7 @@ class DBqueries
   public function queryGetCards($boxID)
   {
     try {
-      $stmt = $this->dbConnect->query(" SELECT id, created_date, question, answer
+      $stmt = $this->dbConnect->query(" SELECT id, created_date, question, answer, type
         FROM cards JOIN box_has_card ON cards.id = box_has_card.card
         WHERE box_has_card.box=" . $boxID );
       $fetchResult = $stmt->fetchall(\PDO::FETCH_ASSOC);

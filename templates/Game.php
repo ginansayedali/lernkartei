@@ -62,9 +62,13 @@
                <span  class="showanswer btn btn-outline-secondary"> show</span>
               </p>
               <div class="show-answer hidden-class">
+                {% if firstCard[0]["type"] == "text" %}
                 <h1 class="card-text">
                   {{ firstCard[0]["answer"] }}
                 </h1>
+                {% else %}
+                 <img class="card-img-top" src="{{ firstCard[0]["answer"] }}" />
+                {% endif %}
                 <button
                  type="button"
                  onclick='window.location.href="{{ php.self }}?do=notsure&cardID={{ firstCard[0]["id"] }}&boxID= {{ box.getBoxID }} "'
